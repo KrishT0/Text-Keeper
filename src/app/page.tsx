@@ -26,7 +26,7 @@ export default function Home() {
           width={50}
           height={50}
           loading="lazy"
-          className="hidden sm:block"
+          className="hidden sm:block pb-8"
         />
       </section>
     </div>
