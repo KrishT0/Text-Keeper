@@ -9,7 +9,7 @@ const geistMono = Geist_Mono({
 
 function TextLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="py-3 px-14 border-2 h-full">
+    <div className="py-3 px-14 h-full">
       <nav
         className={`flex text-sm justify-end items-center gap-2 mb-4 ${geistMono.className}`}
       >
