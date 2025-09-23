@@ -1,5 +1,5 @@
-import React from "react";
 import TextContent from "@/components/textContent";
+
 const data = [
   {
     heading: "Spotify Code",
@@ -55,10 +55,11 @@ Instructions:
 
 function TextPage() {
   return (
-    <div className="pb-8">
+    <div className="pb-8 ">
       {data.map((item, index) => (
         <TextContent key={index} heading={item.heading} text={item.text} />
       ))}
+     
     </div>
   );
 }
