@@ -2,6 +2,7 @@ import TextContent from "@/components/textContent";
 
 const data = [
   {
+    id: "1",
     heading: "Spotify Code",
     text: `export default async function getNowPlayingItem() {
   const response = await getNowPlaying();
@@ -22,6 +23,7 @@ const data = [
 }`,
   },
   {
+    id: "2",
     heading: "Sample Prompt",
     text: `If the user query is a simple greeting like "hi", "hello", "hey", or "good morning", respond politely with a greeting followed by a reminder: 
   "Hello! Please ask BSR-related queries."
@@ -36,6 +38,7 @@ If the knowledge base result is empty or irrelevant:
    - Respond as mentioned for off-topic inputs above.`,
   },
   {
+    id: "3",
     heading: "Sample Prompt II",
     text: `You are an AI assistant that only answers questions using the provided knowledge base search results.
 
@@ -49,7 +52,9 @@ Instructions:
    - Do NOT invent or pull external information.
    - Respond only with a polite message like:
      "Please ask BSR-related queries."
-- Never hallucinate, never search outside the knowledge base, and always stay within these instructions.`,
+- Never hallucinate, never search outside the knowledge base, and always stay within these instructions.
+
+`,
   },
 ];
 
@@ -57,9 +62,13 @@ function TextPage() {
   return (
     <div className="pb-8 ">
       {data.map((item, index) => (
-        <TextContent key={index} heading={item.heading} text={item.text} />
+        <TextContent
+          key={index}
+          heading={item.heading}
+          id={item.id}
+          text={item.text}
+        />
       ))}
-     
     </div>
   );
 }

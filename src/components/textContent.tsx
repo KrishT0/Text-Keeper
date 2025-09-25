@@ -12,11 +12,13 @@ const geistMono = Geist_Mono({
 });
 
 type TextContentPropsType = {
-  heading: string;
+  id: string;
   text: string;
+  heading: string;
+  isDeletaable?: boolean;
 };
 
-function TextContent({ heading, text }: TextContentPropsType) {
+function TextContent({ heading, text, isDeletaable }: TextContentPropsType) {
   const { Image } = useQRCode();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,7 +38,9 @@ function TextContent({ heading, text }: TextContentPropsType) {
     <div className="pb-5 mt-2 relative">
       <div className="flex justify-between items-center">
         <h3 className="text-xl font-semibold">{heading}</h3>
-        <Trash2 className=" h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]" />
+        {isDeletaable && (
+          <Trash2 className=" h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]" />
+        )}
       </div>
       <hr className="mt-1 mb-3 text-[#f5f5f51f]" />
       <div className="bg-[#1F2121] rounded-md">
@@ -78,7 +82,10 @@ function TextContent({ heading, text }: TextContentPropsType) {
             <h4 className="text-lg font-semibold mb-4 text-[#949592]">
               QR Code
             </h4>
-            <Image text="hello" options={{ width: 200, margin: 2 }} />
+            <Image
+              text="ajvfjcackbwiefbkwbefigefoblnpnpde"
+              options={{ width: 200, margin: 2 }}
+            />
           </div>
         </div>
       )}
