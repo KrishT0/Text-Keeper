@@ -15,10 +15,10 @@ type TextContentPropsType = {
   id: string;
   text: string;
   heading: string;
-  isDeletaable?: boolean;
+  isDeletable?: boolean;
 };
 
-function TextContent({ heading, text, isDeletaable }: TextContentPropsType) {
+function TextContent({ id, heading, text, isDeletable }: TextContentPropsType) {
   const { Image } = useQRCode();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -38,7 +38,7 @@ function TextContent({ heading, text, isDeletaable }: TextContentPropsType) {
     <div className="pb-5 mt-2 relative">
       <div className="flex justify-between items-center">
         <h3 className="text-xl font-semibold">{heading}</h3>
-        {isDeletaable && (
+        {isDeletable && (
           <Trash2 className=" h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]" />
         )}
       </div>
@@ -51,7 +51,13 @@ function TextContent({ heading, text, isDeletaable }: TextContentPropsType) {
             text
           </p>
           <div className="flex">
-            <Link2 className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]" />
+            <a
+              href={`${process.env.NEXT_PUBLIC_BASE_URL}/share/${id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Link2 className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]" />
+            </a>
             <QrCode
               className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
               onClick={openModal}
@@ -83,7 +89,7 @@ function TextContent({ heading, text, isDeletaable }: TextContentPropsType) {
               QR Code
             </h4>
             <Image
-              text="ajvfjcackbwiefbkwbefigefoblnpnpde"
+              text={`${process.env.NEXT_PUBLIC_BASE_URL}/share/${id}`}
               options={{ width: 200, margin: 2 }}
             />
           </div>
