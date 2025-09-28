@@ -1,31 +1,53 @@
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { Geist_Mono } from "next/font/google";
-import { CircleUser, Search, Plus } from "lucide-react";
+import AddText from "@/components/addText";
+import { cookies } from "next/headers";
+import { decrypt } from "@/app/utils/session";
+import { sql } from "@/db";
+import { logOutAction } from "./action";
+import LogoutBtn from "@/components/logoutBtn";
 
 const geistMono = Geist_Mono({
   weight: ["400", "600"],
   subsets: ["latin"],
 });
 
-function TextLayout({ children }: { children: React.ReactNode }) {
+async function TextLayout({ children }: { children: React.ReactNode }) {
+  const cookiesStore = await cookies();
+  const session = cookiesStore.get("session")?.value;
+  const userId = session ? (await decrypt(session))?.userId : null;
+
+  const queryResult =
+    await sql`SELECT username FROM users WHERE id = ${userId}`;
+  const username = queryResult[0]?.username || "User";
+
+  const logOutHandler = async () => {
+    "use server";
+    await logOutAction();
+  };
+
   return (
-    <div className="py-3 px-5 sm:px-14">
+    <div className="py-3 pt-5 px-5 sm:px-14">
       <nav
-        className={`flex text-sm justify-end items-center gap-2 mb-4 ${geistMono.className}`}
+        className={`flex text-sm justify-between items-center gap-2 mb-4 ${geistMono.className}`}
       >
-        <p>John Doe</p>
-        <CircleUser />
-      </nav>
-      <div className="sticky shadow-lg z-1 shadow-black top-15 left-0 w-full border-2 rounded-xl mb-5 h-24 bg-[#1F2121] flex flex-col text-xs p-1">
-        <textarea
-          placeholder="Paste your text here..."
-          className=" border-none outline-none m-2 h-10 text-sm resize-none"
-        />
-        <div className="flex gap-3 justify-end pr-3 ">
-          <Search className="w-8 cursor-pointer hover:bg-[#2D2F2F] rounded-md p-[4px]" />
-          <Plus className="w-8 cursor-pointer hover:bg-[#2D2F2F] rounded-md p-[4px]" />
+        <div className="flex items-center gap-2">
+          <Link href="/">
+            <Image
+              src="/logo.svg"
+              alt="Brand logo"
+              width={20}
+              height={20}
+              loading="lazy"
+            />
+          </Link>
+          <p className="font-semibold">{username}</p>
         </div>
-      </div>
+        <LogoutBtn logOutHandler={logOutHandler} />
+      </nav>
+      <AddText />
       {children}
     </div>
   );

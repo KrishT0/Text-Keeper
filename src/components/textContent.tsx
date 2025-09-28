@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Geist_Mono } from "next/font/google";
 import { Copy, QrCode, Link2, X, Trash2 } from "lucide-react";
-
 import { useQRCode } from "next-qrcode";
+import { deleteNoteAction } from "@/app/text/action";
 
 const geistMono = Geist_Mono({
   weight: ["400", "600"],
@@ -18,7 +18,12 @@ type TextContentPropsType = {
   isDeletable?: boolean;
 };
 
-function TextContent({ id, heading, text, isDeletable }: TextContentPropsType) {
+function TextContent({
+  id,
+  heading,
+  text,
+  isDeletable = true,
+}: TextContentPropsType) {
   const { Image } = useQRCode();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -34,12 +39,19 @@ function TextContent({ id, heading, text, isDeletable }: TextContentPropsType) {
     setIsModalOpen(false);
   };
 
+  const deleteNoteHandler = async () => {
+    await deleteNoteAction(id);
+  };
+
   return (
     <div className="pb-5 mt-2 relative">
       <div className="flex justify-between items-center">
         <h3 className="text-xl font-semibold">{heading}</h3>
         {isDeletable && (
-          <Trash2 className=" h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]" />
+          <Trash2
+            onClick={deleteNoteHandler}
+            className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+          />
         )}
       </div>
       <hr className="mt-1 mb-3 text-[#f5f5f51f]" />
@@ -88,6 +100,7 @@ function TextContent({ id, heading, text, isDeletable }: TextContentPropsType) {
             <h4 className="text-lg font-semibold mb-4 text-[#949592]">
               QR Code
             </h4>
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
             <Image
               text={`${process.env.NEXT_PUBLIC_BASE_URL}/share/${id}`}
               options={{ width: 200, margin: 2 }}

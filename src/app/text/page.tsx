@@ -1,4 +1,7 @@
+import { cookies } from "next/headers";
+import { sql } from "@/db";
 import TextContent from "@/components/textContent";
+import { decrypt } from "@/app/utils/session";
 
 type TextItem = {
   id: string;
@@ -6,27 +9,30 @@ type TextItem = {
   text: string;
 };
 
-async function getTexts() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/notes`, {
-    cache: "no-store",
-  });
-  if (!res.ok) throw new Error("Failed to fetch");
-  return res.json();
-}
-
 const TextPage = async () => {
-  const data = await getTexts();
+  const session = (await cookies()).get("session")?.value;
+  const userId = (await decrypt(session))?.userId;
+
+  const data = (await sql`
+    SELECT n.header, n.id, n.text
+    FROM notes n
+    JOIN users u ON n.user_id = u.id
+    WHERE u.id = ${userId}`) as TextItem[];
 
   return (
     <div className="pb-8 ">
-      {data.map((item: TextItem) => (
-        <TextContent
-          key={item.id}
-          heading={item.header}
-          id={item.id}
-          text={item.text}
-        />
-      ))}
+      {data.length > 0 ? (
+        data.map((item: TextItem) => (
+          <TextContent
+            key={item.id}
+            heading={item.header}
+            id={item.id}
+            text={item.text}
+          />
+        ))
+      ) : (
+        <p className="text-center text-sm pt-5">No Texts are created.</p>
+      )}
     </div>
   );
 };

@@ -14,13 +14,8 @@ export async function POST(request: Request) {
   const result = await sql`
     INSERT INTO notes (text, user_id, header)
     VALUES (${text}, ${user_id}, ${header})
-    RETURNING *;
+    RETURNING id;
   `;
 
   return NextResponse.json(result[0]);
-}
-
-export async function GET() {
-  const users = await sql`SELECT * FROM notes`;
-  return NextResponse.json(users);
 }
