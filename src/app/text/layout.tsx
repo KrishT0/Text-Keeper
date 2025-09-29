@@ -2,12 +2,12 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Geist_Mono } from "next/font/google";
-import AddText from "@/components/addText";
+import AddText from "@/app/text/components/addText";
 import { cookies } from "next/headers";
 import { decrypt } from "@/app/utils/session";
-import { sql } from "@/db";
+import { sql } from "@/app/utils/db";
 import { logOutAction } from "./action";
-import LogoutBtn from "@/components/logoutBtn";
+import LogoutBtn from "@/app/text/components/logoutBtn";
 
 const geistMono = Geist_Mono({
   weight: ["400", "600"],

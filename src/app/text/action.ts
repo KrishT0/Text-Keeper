@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { sql } from "@/db";
+import { sql } from "@/app/utils/db";
 import { decrypt, deleteSession } from "@/app/utils/session";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

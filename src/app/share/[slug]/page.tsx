@@ -1,5 +1,6 @@
 import TextContent from "@/components/textContent";
-import { sql } from "@/db";
+import { sql } from "@/app/utils/db";
+import NoNoteFound from "@/app/share/[slug]/components/noNoteFound";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -15,7 +16,7 @@ async function NotePage({ params }: PageProps) {
     `;
 
   if (res.length === 0) {
-    return <div>Note not found</div>;
+    return <NoNoteFound />;
   }
 
   const data = res[0];

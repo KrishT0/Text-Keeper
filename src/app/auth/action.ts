@@ -1,7 +1,7 @@
 "use server";
 
 import { z, type ZodError } from "zod";
-import { sql } from "@/db";
+import { sql } from "@/app/utils/db";
 import { createSession } from "../utils/session";
 
 const authSchema = z.object({
