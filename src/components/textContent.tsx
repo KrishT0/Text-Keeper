@@ -36,7 +36,7 @@ function TextContent({
   const onClickLink = () => {
     const shareableLink = `${process.env.NEXT_PUBLIC_BASE_URL}/share/${id}`;
     navigator.clipboard.writeText(shareableLink);
-    toast("Shareable link copied to clipboard");
+    toast("Link copied to clipboard");
   };
 
   const openModal = () => {
@@ -86,7 +86,7 @@ function TextContent({
           </div>
         </div>
         <pre
-          className={`${geistMono.className} p-4 whitespace-pre-wrap text-xs text-[#C5C8C6]`}
+          className={`${geistMono.className} p-4 whitespace-pre-wrap break-words text-xs text-[#C5C8C6]`}
         >
           {`${text}`}
         </pre>
