@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import ToastProvider from "@/components/sonner";
 
 const openSans = Open_Sans({
   weight: ["400", "600"],
@@ -23,6 +24,7 @@ export default function RootLayout({
         className={`max-w-[900px] h-screen mx-auto ${openSans.className} antialiased`}
       >
         {children}
+        <ToastProvider />
       </body>
     </html>
   );

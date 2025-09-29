@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Geist_Mono } from "next/font/google";
 import { Copy, QrCode, Link2, X, Trash2 } from "lucide-react";
 import { useQRCode } from "next-qrcode";
+import { toast } from "sonner";
 import { deleteNoteAction } from "@/app/text/action";
 
 const geistMono = Geist_Mono({
@@ -29,6 +30,13 @@ function TextContent({
 
   const onClickCopy = () => {
     navigator.clipboard.writeText(text);
+    toast("Text copied to clipboard");
+  };
+
+  const onClickLink = () => {
+    const shareableLink = `${process.env.NEXT_PUBLIC_BASE_URL}/share/${id}`;
+    navigator.clipboard.writeText(shareableLink);
+    toast("Shareable link copied to clipboard");
   };
 
   const openModal = () => {
@@ -63,13 +71,10 @@ function TextContent({
             text
           </p>
           <div className="flex">
-            <a
-              href={`${process.env.NEXT_PUBLIC_BASE_URL}/share/${id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Link2 className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]" />
-            </a>
+            <Link2
+              className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+              onClick={onClickLink}
+            />
             <QrCode
               className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
               onClick={openModal}

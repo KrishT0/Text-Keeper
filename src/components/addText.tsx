@@ -34,7 +34,7 @@ function AddText() {
   };
 
   return (
-    <div className="relative">
+    <>
       <div className="sticky shadow-lg z-1 shadow-black top-15 left-0 w-full border-2 rounded-xl mb-5 h-24 bg-[#1F2121] flex flex-col text-xs p-1">
         <textarea
           placeholder="Paste your text here..."
@@ -72,7 +72,7 @@ function AddText() {
             <input
               type="text"
               id="heading"
-              className="w-full p-1 mb-4 bg-[#2D2F2F] rounded text-sm text-[#C5C8C6] outline-none"
+              className="w-full p-1 px-2 mb-4 bg-[#2D2F2F] rounded text-sm text-[#C5C8C6] outline-none"
               placeholder="Heading"
               autoComplete="off"
               value={heading}
@@ -90,7 +90,7 @@ function AddText() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
