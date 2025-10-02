@@ -1,10 +1,7 @@
 import TextContent from "@/components/textContent";
 import { sql } from "@/app/utils/db";
 import NoNoteFound from "@/app/share/[slug]/components/noNoteFound";
-
-type PageProps = {
-  params: Promise<{ slug: string }>;
-};
+import type { PageProps } from "./type";
 
 async function NotePage({ params }: PageProps) {
   const { slug } = await params;

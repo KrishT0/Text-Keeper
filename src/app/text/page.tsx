@@ -1,23 +1,15 @@
 import { cookies } from "next/headers";
-import { sql } from "@/app/utils/db";
 import TextContent from "@/components/textContent";
 import { decrypt } from "@/app/utils/session";
+import { getNotes } from "@/app/text/action";
 
-type TextItem = {
-  id: string;
-  header: string;
-  text: string;
-};
+import type { TextItem } from "./types";
 
 const TextPage = async () => {
   const session = (await cookies()).get("session")?.value;
-  const userId = (await decrypt(session))?.userId;
+  const userId = String((await decrypt(session))?.userId || "");
 
-  const data = (await sql`
-    SELECT n.header, n.id, n.text
-    FROM notes n
-    JOIN users u ON n.user_id = u.id
-    WHERE u.id = ${userId}`) as TextItem[];
+  const data = await getNotes(userId);
 
   return (
     <div className="pb-8 ">

@@ -5,8 +5,7 @@ import { Geist_Mono } from "next/font/google";
 import AddText from "@/app/text/components/addText";
 import { cookies } from "next/headers";
 import { decrypt } from "@/app/utils/session";
-import { sql } from "@/app/utils/db";
-import { logOutAction } from "./action";
+import { getUsername, logOutAction } from "./action";
 import LogoutBtn from "@/app/text/components/logoutBtn";
 
 const geistMono = Geist_Mono({
@@ -17,11 +16,9 @@ const geistMono = Geist_Mono({
 async function TextLayout({ children }: { children: React.ReactNode }) {
   const cookiesStore = await cookies();
   const session = cookiesStore.get("session")?.value;
-  const userId = session ? (await decrypt(session))?.userId : null;
+  const userId = (await decrypt(session))?.userId;
 
-  const queryResult =
-    await sql`SELECT username FROM users WHERE id = ${userId}`;
-  const username = queryResult[0]?.username || "User";
+  const username = await getUsername(userId);
 
   const logOutHandler = async () => {
     "use server";
