@@ -7,8 +7,8 @@ function NotFound() {
       <h1 className="text-5xl font-semibold text-[#C5C8C6]">404</h1>
       <h2 className="text-2xl font-semibold text-[#C5C8C6]">Page not found</h2>
       <p className="text-sm text-center text-[#C5C8C6]">
-        Oops! The page you're looking for doesn't exist. It might have been
-        moved or deleted.
+        Oops! The page you&apos;re looking for doesn&apos;t exist. It might have
+        been moved or deleted.
       </p>
 
       <Link href="/" className="mt-4 transition-transform hover:scale-110">
