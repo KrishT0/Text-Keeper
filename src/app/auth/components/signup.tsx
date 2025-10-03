@@ -3,10 +3,7 @@
 import { signUp } from "@/app/auth/action";
 import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-
-type authFormType = {
-  toggleAUthForm: () => void;
-};
+import type { authFormType } from "../type";
 
 function SignUp({ toggleAUthForm }: authFormType) {
   const initialState = {
