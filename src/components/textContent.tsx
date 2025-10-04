@@ -1,11 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Geist_Mono } from "next/font/google";
-import { Copy, QrCode, Link2, X, Trash2 } from "lucide-react";
+import {
+  Copy,
+  QrCode,
+  Link2,
+  X,
+  CircleX,
+  Trash2,
+  Edit2,
+  Save,
+  Undo2,
+} from "lucide-react";
 import { useQRCode } from "next-qrcode";
 import { toast } from "sonner";
-import { deleteNoteAction } from "@/app/text/action";
+import { deleteNoteAction, editNoteAction } from "@/app/text/action";
 
 const geistMono = Geist_Mono({
   weight: ["400", "600"],
@@ -27,6 +37,23 @@ function TextContent({
 }: TextContentPropsType) {
   const { Image } = useQRCode();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [noteContent, setNoteContent] = useState(text);
+  const [isEditing, setIsEditing] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+
+  const textRef = useRef<HTMLTextAreaElement>(null);
+
+  const adjustTextareaHeight = () => {
+    const textarea = textRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [noteContent]);
 
   const onClickCopy = () => {
     navigator.clipboard.writeText(text);
@@ -51,16 +78,76 @@ function TextContent({
     await deleteNoteAction(id);
   };
 
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newContent = e.target.value;
+    setNoteContent(newContent);
+    setHasChanges(newContent !== text);
+  };
+
+  const toggleEdit = () => {
+    setIsEditing(true);
+    setTimeout(() => {
+      textRef.current?.focus();
+    }, 0);
+  };
+
+  const handleSave = async () => {
+    if (!hasChanges) return;
+
+    await editNoteAction(id, heading, noteContent);
+    toast("Changes saved successfully");
+    setIsEditing(false);
+    setHasChanges(false);
+  };
+
+  const cancelEdit = () => {
+    setNoteContent(text);
+    setHasChanges(false);
+    setIsEditing(false);
+  };
+
   return (
     <div className="pb-5 mt-2 relative">
       <div className="flex justify-between items-center">
         <h3 className="text-xl font-semibold">{heading}</h3>
-        {isDeletable && (
-          <Trash2
-            onClick={deleteNoteHandler}
-            className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
-          />
-        )}
+        <div className="flex items-center gap-1">
+          {isEditing ? (
+            <>
+              <X
+                onClick={cancelEdit}
+                className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+              />
+              <Undo2
+                className={`h-4 cursor-pointer ${
+                  hasChanges
+                    ? "text-[#949592] hover:text-[#c0c1bd]"
+                    : "text-[#494a48] cursor-not-allowed"
+                }`}
+                onClick={hasChanges ? cancelEdit : undefined}
+              />
+              <Save
+                className={`h-4 cursor-pointer ${
+                  hasChanges
+                    ? "text-[#949592] hover:text-[#c0c1bd]"
+                    : "text-[#494a48] cursor-not-allowed"
+                }`}
+                onClick={handleSave}
+              />
+            </>
+          ) : (
+            <Edit2
+              className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+              onClick={toggleEdit}
+            />
+          )}
+
+          {isDeletable && (
+            <Trash2
+              onClick={deleteNoteHandler}
+              className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+            />
+          )}
+        </div>
       </div>
       <hr className="mt-1 mb-3 text-[#f5f5f51f]" />
       <div className="bg-[#1F2121] rounded-md">
@@ -85,11 +172,13 @@ function TextContent({
             />
           </div>
         </div>
-        <pre
-          className={`${geistMono.className} p-4 whitespace-pre-wrap break-words text-xs text-[#C5C8C6]`}
-        >
-          {`${text}`}
-        </pre>
+        <textarea
+          ref={textRef}
+          readOnly={!isEditing}
+          value={noteContent}
+          onChange={handleTextChange}
+          className={`${geistMono.className} p-4 w-full whitespace-pre-wrap break-words text-xs text-[#C5C8C6] resize-none overflow-hidden focus:outline-none`}
+        />
       </div>
 
       {isModalOpen && (
@@ -100,7 +189,7 @@ function TextContent({
               onClick={closeModal}
               aria-label="Close"
             >
-              <X size={20} />
+              <CircleX size={20} />
             </button>
             <h4 className="text-lg font-semibold mb-4 text-[#949592]">
               QR Code

@@ -37,6 +37,16 @@ export async function deleteNoteAction(id: string) {
   return { success: true };
 }
 
+export async function editNoteAction(id: string, header: string, text: string) {
+  await sql`
+    UPDATE notes
+    SET header = ${header}, text = ${text}
+    WHERE id = ${id}
+  `;
+  revalidateTag("notes");
+  return { success: true };
+}
+
 export const getUsername = unstable_cache(
   async (userId: string | unknown) => {
     const queryResult =
