@@ -106,47 +106,52 @@ function TextContent({
     setIsEditing(false);
   };
 
+  const undoEdit = () => {
+    setNoteContent(text);
+    setHasChanges(false);
+  };
+
   return (
     <div className="pb-5 mt-2 relative">
       <div className="flex justify-between items-center">
         <h3 className="text-xl font-semibold">{heading}</h3>
         <div className="flex items-center gap-1">
-          {isEditing ? (
-            <>
-              <X
-                onClick={cancelEdit}
-                className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
-              />
-              <Undo2
-                className={`h-4 cursor-pointer ${
-                  hasChanges
-                    ? "text-[#949592] hover:text-[#c0c1bd]"
-                    : "text-[#494a48] cursor-not-allowed"
-                }`}
-                onClick={hasChanges ? cancelEdit : undefined}
-              />
-              <Save
-                className={`h-4 cursor-pointer ${
-                  hasChanges
-                    ? "text-[#949592] hover:text-[#c0c1bd]"
-                    : "text-[#494a48] cursor-not-allowed"
-                }`}
-                onClick={handleSave}
-              />
-            </>
-          ) : (
-            <Edit2
-              className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
-              onClick={toggleEdit}
-            />
-          )}
-
-          {isDeletable && (
-            <Trash2
-              onClick={deleteNoteHandler}
-              className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
-            />
-          )}
+          {isDeletable &&
+            (isEditing ? (
+              <>
+                <X
+                  onClick={cancelEdit}
+                  className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+                />
+                <Undo2
+                  className={`h-4 cursor-pointer ${
+                    hasChanges
+                      ? "text-[#949592] hover:text-[#c0c1bd]"
+                      : "text-[#494a48] cursor-not-allowed"
+                  }`}
+                  onClick={hasChanges ? undoEdit : undefined}
+                />
+                <Save
+                  className={`h-4 cursor-pointer ${
+                    hasChanges
+                      ? "text-[#949592] hover:text-[#c0c1bd]"
+                      : "text-[#494a48] cursor-not-allowed"
+                  }`}
+                  onClick={handleSave}
+                />
+              </>
+            ) : (
+              <>
+                <Edit2
+                  className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+                  onClick={toggleEdit}
+                />
+                <Trash2
+                  onClick={deleteNoteHandler}
+                  className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+                />
+              </>
+            ))}
         </div>
       </div>
       <hr className="mt-1 mb-3 text-[#f5f5f51f]" />
