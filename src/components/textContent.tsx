@@ -76,6 +76,7 @@ function TextContent({
 
   const deleteNoteHandler = async () => {
     await deleteNoteAction(id);
+    toast("Note deleted successfully");
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
