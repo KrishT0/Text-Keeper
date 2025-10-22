@@ -128,7 +128,7 @@ function TextContent({
                   className={`h-4 cursor-pointer ${
                     hasChanges
                       ? "text-[#949592] hover:text-[#c0c1bd]"
-                      : "text-[#494a48] cursor-not-allowed"
+                      : "text-[#494a48] !cursor-default"
                   }`}
                   onClick={hasChanges ? undoEdit : undefined}
                 />
@@ -136,7 +136,7 @@ function TextContent({
                   className={`h-4 cursor-pointer ${
                     hasChanges
                       ? "text-[#949592] hover:text-[#c0c1bd]"
-                      : "text-[#494a48] cursor-not-allowed"
+                      : "text-[#494a48] !cursor-default"
                   }`}
                   onClick={handleSave}
                 />
@@ -179,11 +179,12 @@ function TextContent({
           </div>
         </div>
         <textarea
+          id="text-content"
           ref={textRef}
           readOnly={!isEditing}
           value={noteContent}
           onChange={handleTextChange}
-          className={`${geistMono.className} p-4 w-full whitespace-pre-wrap break-words text-xs text-[#C5C8C6] resize-none overflow-hidden focus:outline-none`}
+          className={`${geistMono.className} p-4 w-full whitespace-pre-wrap break-words text-xs text-[#C5C8C6] resize-none font-semibold overflow-hidden focus:outline-none`}
         />
       </div>
 
