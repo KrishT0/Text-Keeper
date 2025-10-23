@@ -6,7 +6,7 @@ import { Copy, FileJson, Undo2, RemoveFormatting } from "lucide-react";
 import { toast } from "sonner";
 
 const geistMono = Geist_Mono({
-  weight: ["400", "600"],
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
 });
 
@@ -104,7 +104,7 @@ function JsonPage() {
         value={text}
         onChange={handleTextChange}
         placeholder="Enter or paste your JSON here"
-        className={`${geistMono.className} bg-[#1F2121] p-4 h-[200px] rounded-md w-full whitespace-pre-wrap break-words text-xs text-[#C5C8C6] resize-none overflow-hidden focus:outline-none`}
+        className={`${geistMono.className} bg-[#1F2121] p-4 h-[200px] rounded-md w-full font-medium whitespace-pre-wrap break-words text-xs text-[#C5C8C6] resize-none overflow-hidden focus:outline-none`}
       ></textarea>
     </div>
   );

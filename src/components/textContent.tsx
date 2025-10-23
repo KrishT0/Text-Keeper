@@ -18,7 +18,7 @@ import { toast } from "sonner";
 import { deleteNoteAction, editNoteAction } from "@/app/text/action";
 
 const geistMono = Geist_Mono({
-  weight: ["400", "600"],
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
 });
 
@@ -184,7 +184,7 @@ function TextContent({
           readOnly={!isEditing}
           value={noteContent}
           onChange={handleTextChange}
-          className={`${geistMono.className} p-4 w-full whitespace-pre-wrap break-words text-xs text-[#C5C8C6] resize-none font-semibold overflow-hidden focus:outline-none`}
+          className={`${geistMono.className} p-4 w-full whitespace-pre-wrap break-words text-xs text-[#C5C8C6] resize-none font-medium overflow-hidden focus:outline-none`}
         />
       </div>
 
