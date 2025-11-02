@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Type, Braces } from "lucide-react";
 
 export default function Home() {
   return (
@@ -11,11 +10,7 @@ export default function Home() {
         </h1>
         <hr className="w-1/2 sm:w-1/4 mt-7 mb-4" />
         <Link href="text" className="sm:text-lg w-fit flex items-center gap-2">
-          <Type className="w-5 h-5" /> <span>text-keeper.vercel.app/text</span>
-        </Link>
-        <Link href="json" className="sm:text-lg w-fit flex items-center gap-2">
-          <Braces className="w-5 h-5" />
-          <span>text-keeper.vercel.app/json</span>
+          text-keeper.vercel.app/text
         </Link>
       </section>
       <section className="sm:h-1/3 flex gap-16 p-10 w-full">
