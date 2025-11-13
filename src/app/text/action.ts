@@ -8,12 +8,18 @@ import { redirect } from "next/navigation";
 
 import type { TextItem, TextType } from "./types";
 
-export async function addTextAction(data: TextType) {
-  const header = data.header;
-  const text = data.text;
+const getUserIdFromSession = async (): Promise<string | null> => {
   const cookiesStore = await cookies();
   const session = cookiesStore.get("session")?.value;
   const userId = session ? (await decrypt(session))?.userId : null;
+
+  return userId as string | null;
+};
+
+export async function addTextAction(data: TextType) {
+  const header = data.header;
+  const text = data.text;
+  const userId = await getUserIdFromSession();
 
   if (!userId) return { error: "User not authenticated" };
 
@@ -22,7 +28,7 @@ export async function addTextAction(data: TextType) {
     VALUES (${header}, ${text}, ${userId})
   `;
 
-  revalidateTag("notes");
+  revalidateTag(`notes-${userId}`);
   return { success: true };
 }
 
@@ -32,44 +38,75 @@ export async function logOutAction() {
 }
 
 export async function deleteNoteAction(id: string) {
+  const userId = await getUserIdFromSession();
+
+  if (!userId) return { error: "User not authenticated" };
+
   await sql`DELETE FROM notes WHERE id = ${id}`;
-  revalidateTag("notes");
+
+  revalidateTag(`notes-${userId}`);
   return { success: true };
 }
 
 export async function editNoteAction(id: string, header: string, text: string) {
+  const userId = await getUserIdFromSession();
+
+  if (!userId) return { error: "User not authenticated" };
+
   await sql`
     UPDATE notes
     SET header = ${header}, text = ${text}
     WHERE id = ${id}
   `;
-  revalidateTag("notes");
+
+  revalidateTag(`notes-${userId}`);
   return { success: true };
 }
 
-export const getUsername = unstable_cache(
-  async (userId: string | unknown) => {
-    const queryResult =
-      await sql`SELECT username FROM users WHERE id = ${userId}`;
-    const username = queryResult[0]?.username || "User";
-    return username;
-  },
-  ["username"],
-  { tags: ["username"] }
-);
+export const getUsername = async (userId: string | unknown) =>
+  unstable_cache(
+    async () => {
+      const queryResult =
+        await sql`SELECT username FROM users WHERE id = ${userId}`;
+      const username = queryResult[0]?.username || "User";
+      return username;
+    },
+    [`username-${userId}`],
+    { tags: [`username-${userId}`] }
+  )();
 
-export const getNotes = unstable_cache(
-  async (userId: string): Promise<TextItem[]> => {
-    const dt = (await sql`
-    SELECT n.header, n.id, n.text
-    FROM notes n
-    JOIN users u ON n.user_id = u.id
-    WHERE u.id = ${userId}
-  `) as TextItem[];
-    return dt;
-  },
-  ["notes"],
-  {
-    tags: ["notes"],
+export const getNotes = async (userId: string) =>
+  unstable_cache(
+    async (): Promise<TextItem[]> => {
+      const dt = (await sql`
+      SELECT n.header, n.id, n.text
+      FROM notes n
+      JOIN users u ON n.user_id = u.id
+      WHERE u.id = ${userId}
+    `) as TextItem[];
+      return dt;
+    },
+    [`notes-${userId}`],
+    {
+      tags: [`notes-${userId}`],
+    }
+  )();
+
+export async function checkUserAccess() {
+  const userId = await getUserIdFromSession();
+  if (!userId) {
+    return { hasAccess: false, message: "User not authenticated" };
   }
-);
+
+  const queryResult =
+    await sql`SELECT ai_accessible FROM users WHERE id = ${userId}`;
+  const hasAIAccess = queryResult[0]?.ai_accessible;
+  if (hasAIAccess) {
+    return { hasAccess: true, message: "AI access granted" };
+  }
+
+  return {
+    hasAccess: false,
+    message: "AI access not granted",
+  };
+}

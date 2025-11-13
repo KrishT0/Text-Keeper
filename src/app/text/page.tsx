@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import TextContent from "@/components/textContent";
+import TextContent from "@/app/components/textContent";
 import { decrypt } from "@/app/utils/session";
 import { getNotes } from "@/app/text/action";
 

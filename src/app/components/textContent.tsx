@@ -12,10 +12,13 @@ import {
   Edit2,
   Save,
   Undo2,
+  Sparkles,
 } from "lucide-react";
 import { useQRCode } from "next-qrcode";
 import { toast } from "sonner";
 import { deleteNoteAction, editNoteAction } from "@/app/text/action";
+import AIModal from "@/app/components/aiModal";
+import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 const geistMono = Geist_Mono({
   weight: ["400", "500", "600"],
@@ -37,10 +40,12 @@ function TextContent({
 }: TextContentPropsType) {
   const { Image } = useQRCode();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [aiModalOpen, setAiModalOpen] = useState(false);
   const [noteContent, setNoteContent] = useState(text);
   const [isEditing, setIsEditing] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
 
+  const isDesktop = useMediaQuery("(min-width: 850px)");
   const textRef = useRef<HTMLTextAreaElement>(null);
 
   const adjustTextareaHeight = () => {
@@ -72,6 +77,14 @@ function TextContent({
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const aiOpenModal = () => {
+    setAiModalOpen(true);
+  };
+
+  const aiCloseModal = () => {
+    setAiModalOpen(false);
   };
 
   const deleteNoteHandler = async () => {
@@ -151,6 +164,12 @@ function TextContent({
                   onClick={deleteNoteHandler}
                   className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
                 />
+                {isDesktop && (
+                  <Sparkles
+                    onClick={aiOpenModal}
+                    className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+                  />
+                )}
               </>
             ))}
         </div>
@@ -209,6 +228,7 @@ function TextContent({
           </div>
         </div>
       )}
+      {aiModalOpen && <AIModal aiCloseModal={aiCloseModal} />}
     </div>
   );
 }

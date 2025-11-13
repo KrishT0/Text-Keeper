@@ -10,15 +10,20 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@ai-sdk/google": "^2.0.29",
+    "@ai-sdk/react": "^2.0.89",
     "@neondatabase/serverless": "^1.0.1",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
+    "ai": "^5.0.89",
     "jose": "^6.1.0",
     "lucide-react": "^0.544.0",
     "next": "15.5.3",
     "next-qrcode": "^2.5.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "sonner": "^2.0.7",
     "zod": "^4.1.11"
   },
