@@ -44,3 +44,11 @@ export async function decrypt(session: string | undefined = "") {
     return null;
   }
 }
+
+export async function getUserIdFromSession(): Promise<string | null> {
+  const cookiesStore = await cookies();
+  const session = cookiesStore.get("session")?.value;
+  const userId = session ? (await decrypt(session))?.userId : null;
+
+  return userId as string | null;
+}

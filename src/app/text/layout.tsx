@@ -6,8 +6,8 @@ import AddText from "@/app/text/components/addText";
 import { cookies } from "next/headers";
 import { decrypt } from "@/app/utils/session";
 import { getUsername, logOutAction } from "./action";
-import LogoutBtn from "@/app/text/components/logoutBtn";
-import { Braces } from "lucide-react";
+import LogoutBtn from "@/app/components/logoutBtn";
+import { Braces, FolderSync } from "lucide-react";
 
 const geistMono = Geist_Mono({
   weight: ["400", "600"],
@@ -46,6 +46,9 @@ async function TextLayout({ children }: { children: React.ReactNode }) {
         <div className="flex align-center gap-4">
           <Link href="json" title="View as JSON">
             <Braces className="cursor-pointer w-8 h-4 hover:text-green-400" />
+          </Link>
+          <Link href="upload" title="View as JSON">
+            <FolderSync className="cursor-pointer w-8 h-4 hover:text-green-400" />
           </Link>
           <LogoutBtn logOutHandler={logOutHandler} />
         </div>

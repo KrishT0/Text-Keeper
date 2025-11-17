@@ -6,7 +6,6 @@ export async function middleware(req: NextRequest) {
   const cookie = req.cookies.get("session")?.value;
   const pathname = req.nextUrl.pathname;
 
-  // Redirect to /text if cookie exists and its valid
   if (pathname === "/auth" && cookie) {
     const session = await decrypt(cookie);
     if (session) {
@@ -14,7 +13,6 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // Redirect to /auth if cookie doesn't exist or invalid
   if (pathname === "/text") {
     if (!cookie) {
       return NextResponse.redirect(new URL("/auth", req.url));
@@ -30,5 +28,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/auth", "/text"],
+  matcher: ["/auth", "/text", "/upload"],
 };

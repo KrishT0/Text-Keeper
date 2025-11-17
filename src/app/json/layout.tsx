@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Geist_Mono } from "next/font/google";
-import { Type } from "lucide-react";
+import { Type, FolderSync } from "lucide-react";
 
 const geistMono = Geist_Mono({
   weight: ["400", "600"],
@@ -28,8 +28,11 @@ function JsonLayout({ children }: { children: React.ReactNode }) {
           <p className="font-semibold">JSON Formatter</p>
         </div>
         <div className="flex align-center gap-4">
-          <Link href="/text">
+          <Link href="text">
             <Type className="cursor-pointer w-8 h-4 hover:text-green-400" />
+          </Link>
+          <Link href="upload">
+            <FolderSync className="cursor-pointer w-8 h-4 hover:text-green-400" />
           </Link>
         </div>
       </nav>

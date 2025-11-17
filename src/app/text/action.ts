@@ -1,20 +1,11 @@
 "use server";
 
 import { revalidateTag, unstable_cache } from "next/cache";
-import { cookies } from "next/headers";
 import { sql } from "@/app/utils/db";
-import { decrypt, deleteSession } from "@/app/utils/session";
+import { deleteSession, getUserIdFromSession } from "@/app/utils/session";
 import { redirect } from "next/navigation";
 
 import type { TextItem, TextType } from "./types";
-
-const getUserIdFromSession = async (): Promise<string | null> => {
-  const cookiesStore = await cookies();
-  const session = cookiesStore.get("session")?.value;
-  const userId = session ? (await decrypt(session))?.userId : null;
-
-  return userId as string | null;
-};
 
 export async function addTextAction(data: TextType) {
   const header = data.header;

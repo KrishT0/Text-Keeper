@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="flex flex-col h-full">
       <section className="h-1/2 sm:h-2/3 p-10 flex flex-col justify-center w-full">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl font-semibold">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl font-medium">
           Store Text Securely
         </h1>
         <hr className="w-1/2 sm:w-1/4 mt-7 mb-4" />

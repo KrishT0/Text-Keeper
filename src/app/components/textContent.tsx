@@ -39,11 +39,11 @@ function TextContent({
   isDeletable = true,
 }: TextContentPropsType) {
   const { Image } = useQRCode();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [aiModalOpen, setAiModalOpen] = useState(false);
-  const [noteContent, setNoteContent] = useState(text);
-  const [isEditing, setIsEditing] = useState(false);
-  const [hasChanges, setHasChanges] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [aiModalOpen, setAiModalOpen] = useState<boolean>(false);
+  const [noteContent, setNoteContent] = useState<string>(text);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [hasChanges, setHasChanges] = useState<boolean>(false);
 
   const isDesktop = useMediaQuery("(min-width: 850px)");
   const textRef = useRef<HTMLTextAreaElement>(null);
@@ -128,7 +128,7 @@ function TextContent({
   return (
     <div className="pb-5 mt-2 relative">
       <div className="flex justify-between items-center">
-        <h3 className="text-xl font-semibold">{heading}</h3>
+        <h3 className="text-xl font-medium">{heading}</h3>
         <div className="flex items-center gap-1">
           {isDeletable &&
             (isEditing ? (

@@ -2,13 +2,21 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Geist_Mono } from "next/font/google";
-import { Type } from "lucide-react";
+import { Type, Braces } from "lucide-react";
+import LogoutBtn from "../components/logoutBtn";
+import { logOutAction } from "../text/action";
 
 const geistMono = Geist_Mono({
   weight: ["400", "600"],
   subsets: ["latin"],
 });
+
 function UploadLayout({ children }: { children: React.ReactNode }) {
+  const logOutHandler = async () => {
+    "use server";
+    await logOutAction();
+  };
+
   return (
     <div className="py-3 pt-5 px-5 sm:px-14">
       <nav
@@ -27,9 +35,13 @@ function UploadLayout({ children }: { children: React.ReactNode }) {
           <p className="font-semibold">File Upload</p>
         </div>
         <div className="flex align-center gap-4">
-          <Link href="/text">
+          <Link href="json">
+            <Braces className="cursor-pointer w-8 h-4 hover:text-green-400" />
+          </Link>
+          <Link href="text">
             <Type className="cursor-pointer w-8 h-4 hover:text-green-400" />
           </Link>
+          <LogoutBtn logOutHandler={logOutHandler} />
         </div>
       </nav>
       {children}
