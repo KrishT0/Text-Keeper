@@ -1,16 +1,17 @@
 "use client";
 
 import { login } from "@/app/auth/action";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { authFormType } from "../type";
+import { Eye, EyeClosed } from "lucide-react";
 
 function LoginForm({ toggleAUthForm }: authFormType) {
   const initialState = {
     errors: {},
     values: { username: "", password: "" },
   };
-
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [state, formAction, isPending] = useActionState(login, initialState);
   const router = useRouter();
 
@@ -19,6 +20,10 @@ function LoginForm({ toggleAUthForm }: authFormType) {
       router.push("/text");
     }
   }, [state.user, router]);
+
+  const togglePassworrdVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -34,7 +39,7 @@ function LoginForm({ toggleAUthForm }: authFormType) {
             id="username"
             name="username"
             type="text"
-            placeholder="Username"
+            placeholder="Enter your username"
             defaultValue={state?.values?.username}
             autoComplete="off"
             className="p-2 rounded-md bg-[#1F2121] text-sm outline-none"
@@ -45,15 +50,15 @@ function LoginForm({ toggleAUthForm }: authFormType) {
             </p>
           )}
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex relative flex-col gap-2">
           <label htmlFor="password" className="text-sm">
             Password
           </label>
           <input
             id="password"
             name="password"
-            type="password"
-            placeholder="Password"
+            type={isPasswordVisible ? "input" : "password"}
+            placeholder="Enter your password"
             defaultValue={state?.values?.password}
             autoComplete="off"
             className="p-2 rounded-md bg-[#1F2121] text-sm outline-none"
@@ -62,6 +67,17 @@ function LoginForm({ toggleAUthForm }: authFormType) {
             <p className="text-xs font-semibold text-red-400 mt-1">
               {state.errors.password[0]}
             </p>
+          )}
+          {isPasswordVisible ? (
+            <EyeClosed
+              className="absolute h-4 right-1 bottom-[9px]"
+              onClick={togglePassworrdVisibility}
+            />
+          ) : (
+            <Eye
+              className="absolute h-4 right-1 bottom-[9px]"
+              onClick={togglePassworrdVisibility}
+            />
           )}
         </div>
         <button
