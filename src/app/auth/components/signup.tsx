@@ -82,7 +82,7 @@ function SignUp({ toggleAUthForm }: authFormType) {
         </div>
         <button
           type="submit"
-          className={`cursor-pointer font-semibold p-1 text-sm bg-[#EDEDED] text-[#191A1A] rounded-md ${
+          className={`cursor-pointer font-medium p-1 text-sm bg-[#EDEDED] text-[#191A1A] rounded-md ${
             isPending && "opacity-50"
           }`}
           disabled={isPending}
@@ -93,7 +93,7 @@ function SignUp({ toggleAUthForm }: authFormType) {
       <p className="text-sm text-[#818181] text-center mt-3">
         Already a member?
         <span
-          className=" ml-2 cursor-pointer font-semibold text-[#bbbaba]"
+          className=" ml-2 cursor-pointer font-medium text-[#bbbaba]"
           onClick={toggleAUthForm}
         >
           Login
