@@ -28,7 +28,7 @@ export async function uploadFile(file: File) {
       return { error: storageError.message };
     }
 
-    const result = await sql`
+    await sql`
       INSERT INTO files (user_id, file_name, file_size)
       VALUES (${userId}, ${file.name}, ${file.size})
       ON CONFLICT (user_id, file_name)

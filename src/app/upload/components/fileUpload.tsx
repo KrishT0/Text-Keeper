@@ -6,7 +6,7 @@ import { useDropzone, type FileRejection } from "react-dropzone";
 import { toast } from "sonner";
 import type { FileUploadeProps } from "../types";
 
-function FileUpload({ files, setFiles }: FileUploadeProps) {
+function FileUpload({ setFiles }: FileUploadeProps) {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (acceptedFiles.length > 1) {

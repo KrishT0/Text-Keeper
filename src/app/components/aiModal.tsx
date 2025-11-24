@@ -5,7 +5,7 @@ import { useCompletion } from "@ai-sdk/react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Geist_Mono } from "next/font/google";
-import { Copy, CircleX } from "lucide-react";
+import { CircleX } from "lucide-react";
 import { checkUserAccess } from "@/app/text/action";
 
 const geistMono = Geist_Mono({

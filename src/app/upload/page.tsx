@@ -6,7 +6,6 @@ import FileUpload from "./components/fileUpload";
 import type { UploadedFile } from "./types";
 import { Download, Trash2 } from "lucide-react";
 import { deleteFile, downloadFile, getUserFiles, uploadFile } from "./actions";
-import { fi } from "zod/locales";
 
 function UploadPage() {
   const [files, setFiles] = useState<File[]>([]);
@@ -81,7 +80,7 @@ function UploadPage() {
 
   return (
     <div className="mt-10 px-2">
-      <FileUpload files={files} setFiles={setFiles} />
+      <FileUpload setFiles={setFiles} />
       <div>
         {files.length > 0 && (
           <div className="mt-3 flex flex-col sm:flex-row gap-2">
