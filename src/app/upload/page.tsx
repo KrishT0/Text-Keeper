@@ -25,7 +25,6 @@ function UploadPage() {
         const response = await getUserFiles();
         const data: UploadedFile[] = (response.data as UploadedFile[]) || [];
         setUploadedFiles(data);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching uploaded files:", error);
       }

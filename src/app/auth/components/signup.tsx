@@ -70,12 +70,12 @@ function SignUp({ toggleAUthForm }: authFormType) {
           )}
           {isPasswordVisible ? (
             <EyeClosed
-              className="absolute h-4 right-1 bottom-[9px]"
+              className="absolute h-4 right-1 cursor-pointer bottom-[9px]"
               onClick={togglePassworrdVisibility}
             />
           ) : (
             <Eye
-              className="absolute h-4 right-1 bottom-[9px]"
+              className="absolute h-4 right-1 cursor-pointer bottom-[9px]"
               onClick={togglePassworrdVisibility}
             />
           )}

@@ -83,7 +83,7 @@ export async function deleteFile(fileName: string) {
     if (!fileResult || fileResult.length === 0) {
       return { error: "File not found or unauthorized" };
     }
-    const { data, error } = await supabaseStorage.storage
+    await supabaseStorage.storage
       .from("Text Keeper Storage")
       .remove([`${userId}/${fileName}`]);
 
