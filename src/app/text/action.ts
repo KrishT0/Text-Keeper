@@ -70,10 +70,9 @@ export const getNotes = async (userId: string) =>
   unstable_cache(
     async (): Promise<TextItem[]> => {
       const dt = (await sql`
-      SELECT n.header, n.id, n.text
-      FROM notes n
-      JOIN users u ON n.user_id = u.id
-      WHERE u.id = ${userId}
+      SELECT header, id, text
+      FROM notes
+      WHERE user_id = ${userId}
     `) as TextItem[];
       return dt;
     },
