@@ -9,16 +9,16 @@ import type { FileUploadeProps } from "../types";
 function FileUpload({ setFiles }: FileUploadeProps) {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      if (acceptedFiles.length > 1) {
-        toast.warning("Only 1 file can be uploaded at once.");
-        return;
-      }
+      // if (acceptedFiles.length > 1) {
+      //   toast.warning("Only 1 file can be uploaded at once.");
+      //   return;
+      // }
 
       setFiles(acceptedFiles);
 
-      if (acceptedFiles.length === 1) {
-        toast.success(`File "${acceptedFiles[0].name}" ready to upload`);
-      }
+      // if (acceptedFiles.length === 1) {
+      //   toast.success(`File "${acceptedFiles[0].name}" ready to upload`);
+      // }
     },
     [setFiles]
   );
@@ -44,9 +44,9 @@ function FileUpload({ setFiles }: FileUploadeProps) {
     onDropRejected,
     // Accept all file types by not specifying accept property
     // Or use accept: { '*/*': [] } to be explicit
-    multiple: false, // Force single file
-    maxFiles: 1, // Enforce maximum 1 file
-    maxSize: 5 * 1024 * 1024, // 5MB limit
+    multiple: true, // Allow multiple files
+    maxFiles: 100, // Enforce maximum 1 file
+    maxSize: 50 * 1024 * 1024, // 50MB limit
   });
 
   return (
