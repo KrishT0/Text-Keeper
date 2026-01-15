@@ -83,7 +83,10 @@ function UploadPage() {
       <div>
         {files.length > 0 &&
           files.map((file) => (
-            <div className="mt-3 flex flex-col sm:flex-row gap-2">
+            <div
+              key={file.name}
+              className="mt-3 flex flex-col sm:flex-row gap-2"
+            >
               <div className="p-2 bg-[#1F2121] rounded-md w-full">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex gap-2">
