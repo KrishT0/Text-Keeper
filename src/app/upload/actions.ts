@@ -34,7 +34,6 @@ export async function uploadFile(file: File[]) {
       ON CONFLICT (user_id, file_name)
       DO NOTHING`;
     }
-
     revalidatePath("/upload");
 
     return {

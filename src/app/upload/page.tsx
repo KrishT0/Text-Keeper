@@ -40,7 +40,7 @@ function UploadPage() {
     }
     await uploadFile(files);
     toast.success("File uploaded successfully");
-    // setFiles([]);
+    setFiles([]);
   };
 
   const downloadUploadedFile = async (fileName: string) => {
