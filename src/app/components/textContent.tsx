@@ -12,13 +12,10 @@ import {
   Edit2,
   Save,
   Undo2,
-  Sparkles,
 } from "lucide-react";
 import { useQRCode } from "next-qrcode";
 import { toast } from "sonner";
 import { deleteNoteAction, editNoteAction } from "@/app/text/action";
-import AIModal from "@/app/components/aiModal";
-import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 const geistMono = Geist_Mono({
   weight: ["400", "500", "600"],
@@ -40,12 +37,10 @@ function TextContent({
 }: TextContentPropsType) {
   const { Image } = useQRCode();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [aiModalOpen, setAiModalOpen] = useState<boolean>(false);
   const [noteContent, setNoteContent] = useState<string>(text);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [hasChanges, setHasChanges] = useState<boolean>(false);
 
-  const isDesktop = useMediaQuery("(min-width: 850px)");
   const textRef = useRef<HTMLTextAreaElement>(null);
 
   const adjustTextareaHeight = () => {
@@ -77,14 +72,6 @@ function TextContent({
 
   const closeModal = () => {
     setIsModalOpen(false);
-  };
-
-  const aiOpenModal = () => {
-    setAiModalOpen(true);
-  };
-
-  const aiCloseModal = () => {
-    setAiModalOpen(false);
   };
 
   const deleteNoteHandler = async () => {
@@ -141,7 +128,7 @@ function TextContent({
                   className={`h-4 cursor-pointer ${
                     hasChanges
                       ? "text-[#949592] hover:text-[#c0c1bd]"
-                      : "text-[#494a48] !cursor-default"
+                      : "text-[#494a48] cursor-default!"
                   }`}
                   onClick={hasChanges ? undoEdit : undefined}
                 />
@@ -149,7 +136,7 @@ function TextContent({
                   className={`h-4 cursor-pointer ${
                     hasChanges
                       ? "text-[#949592] hover:text-[#c0c1bd]"
-                      : "text-[#494a48] !cursor-default"
+                      : "text-[#494a48] cursor-default!"
                   }`}
                   onClick={handleSave}
                 />
@@ -164,12 +151,6 @@ function TextContent({
                   onClick={deleteNoteHandler}
                   className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
                 />
-                {isDesktop && (
-                  <Sparkles
-                    onClick={aiOpenModal}
-                    className="h-4 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
-                  />
-                )}
               </>
             ))}
         </div>
@@ -203,7 +184,7 @@ function TextContent({
           readOnly={!isEditing}
           value={noteContent}
           onChange={handleTextChange}
-          className={`${geistMono.className} p-4 w-full whitespace-pre-wrap break-words text-xs text-[#C5C8C6] resize-none font-medium overflow-hidden focus:outline-none`}
+          className={`${geistMono.className} p-4 w-full whitespace-pre-wrap wrap-break-words text-xs text-[#C5C8C6] resize-none font-medium overflow-hidden focus:outline-none`}
         />
       </div>
 
@@ -228,7 +209,6 @@ function TextContent({
           </div>
         </div>
       )}
-      {aiModalOpen && <AIModal aiCloseModal={aiCloseModal} />}
     </div>
   );
 }

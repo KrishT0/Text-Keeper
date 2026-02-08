@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Geist_Mono } from "next/font/google";
-import { Type, Braces } from "lucide-react";
+import { Type } from "lucide-react";
 import LogoutBtn from "../components/logoutBtn";
 import { logOutAction } from "../text/action";
 
@@ -35,9 +35,6 @@ function UploadLayout({ children }: { children: React.ReactNode }) {
           <p className="font-semibold">File Upload</p>
         </div>
         <div className="flex align-center gap-4">
-          <Link href="json">
-            <Braces className="cursor-pointer w-8 h-4 hover:text-green-400" />
-          </Link>
           <Link href="text">
             <Type className="cursor-pointer w-8 h-4 hover:text-green-400" />
           </Link>

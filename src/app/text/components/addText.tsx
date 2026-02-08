@@ -49,7 +49,7 @@ function AddText() {
               text
                 ? "cursor-pointer bg-[#EDEDED] text-[#191A1A] font-semibold"
                 : "bg-[#2D2F2F] text-[#636363]"
-            } rounded-md p-[4px]`}
+            } rounded-md p-1`}
             onClick={text ? handleAddTextClick : undefined}
           />
         </div>
@@ -81,7 +81,7 @@ function AddText() {
             <button
               disabled={!heading}
               className={`px-4 py-1 text-sm font-semibold cursor-pointer bg-[#3A3C3C] text-[#C5C8C6] rounded hover:bg-[#4A4C4C] ${
-                !heading && "opacity-50 !cursor-not-allowed"
+                !heading && "opacity-50 cursor-not-allowed!"
               }`}
               onClick={handleAddText}
             >
