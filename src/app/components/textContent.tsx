@@ -12,6 +12,8 @@ import {
   Edit2,
   Save,
   Undo2,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { useQRCode } from "next-qrcode";
 import { toast } from "sonner";
@@ -29,6 +31,8 @@ type TextContentPropsType = {
   isDeletable?: boolean;
 };
 
+const MAX_HEIGHT = 250;
+
 function TextContent({
   id,
   heading,
@@ -40,6 +44,8 @@ function TextContent({
   const [noteContent, setNoteContent] = useState<string>(text);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [hasChanges, setHasChanges] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [needsExpansion, setNeedsExpansion] = useState<boolean>(false);
 
   const textRef = useRef<HTMLTextAreaElement>(null);
 
@@ -47,13 +53,26 @@ function TextContent({
     const textarea = textRef.current;
     if (textarea) {
       textarea.style.height = "auto";
-      textarea.style.height = `${textarea.scrollHeight}px`;
+      const scrollHeight = textarea.scrollHeight;
+
+      // Check if content exceeds max height
+      if (scrollHeight > MAX_HEIGHT && !isEditing) {
+        setNeedsExpansion(true);
+        if (!isExpanded) {
+          textarea.style.height = `${MAX_HEIGHT}px`;
+        } else {
+          textarea.style.height = `${scrollHeight}px`;
+        }
+      } else {
+        setNeedsExpansion(false);
+        textarea.style.height = `${scrollHeight}px`;
+      }
     }
   };
 
   useEffect(() => {
     adjustTextareaHeight();
-  }, [noteContent]);
+  }, [noteContent, isExpanded, isEditing]);
 
   const onClickCopy = () => {
     navigator.clipboard.writeText(text);
@@ -87,6 +106,7 @@ function TextContent({
 
   const toggleEdit = () => {
     setIsEditing(true);
+    setIsExpanded(true);
     setTimeout(() => {
       textRef.current?.focus();
     }, 0);
@@ -112,8 +132,12 @@ function TextContent({
     setHasChanges(false);
   };
 
+  const toggleExpansion = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
-    <div className="pb-5 mt-2 relative">
+    <div id={id} className="pb-5 mt-2 relative">
       <div className="flex justify-between items-center">
         <h3 className="text-xl font-medium">{heading}</h3>
         <div className="flex items-center gap-1">
@@ -179,13 +203,35 @@ function TextContent({
           </div>
         </div>
         <textarea
-          id="text-content"
+          id={`text-content-${id}`}
           ref={textRef}
           readOnly={!isEditing}
           value={noteContent}
           onChange={handleTextChange}
-          className={`${geistMono.className} p-4 w-full whitespace-pre-wrap wrap-break-words text-xs text-[#C5C8C6] resize-none font-medium overflow-hidden focus:outline-none`}
+          className={`${geistMono.className} scrollbar-hide p-4 w-full whitespace-pre-wrap wrap-break-words text-xs text-[#C5C8C6] resize-none font-medium ${
+            needsExpansion && !isExpanded && !isEditing
+              ? "overflow-hidden"
+              : "overflow-hidden"
+          } focus:outline-none transition-all duration-300`}
         />
+        {needsExpansion && !isEditing && (
+          <div
+            onClick={toggleExpansion}
+            className="flex items-center justify-center gap-1 py-2 cursor-pointer text-[#949592] hover:text-[#c0c1bd] text-xs transition-colors"
+          >
+            {isExpanded ? (
+              <>
+                <span>Show less</span>
+                <ChevronUp className="h-3 w-3" />
+              </>
+            ) : (
+              <>
+                <span>Show more</span>
+                <ChevronDown className="h-3 w-3" />
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       {isModalOpen && (
