@@ -39,7 +39,7 @@ function AddText() {
         <textarea
           id="search-bar"
           placeholder="Paste your text here..."
-          className=" border-none outline-none m-2 h-10 text-sm resize-none"
+          className=" border-none outline-none m-2 h-10 text-sm resize-none scrollbar-hide"
           value={text}
           onChange={handleChange}
         />
