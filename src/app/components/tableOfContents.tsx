@@ -18,10 +18,14 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - 165;
+
+      window.scrollTo({
+        top: offsetPosition,
         behavior: "smooth",
-        block: "start",
       });
+
       setIsOpen(false);
     }
   };
@@ -47,7 +51,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
               <li key={item.id}>
                 <button
                   onClick={() => scrollToSection(item.id)}
-                  className="text-left w-full px-3 py-1 text-sm text-[#949592] hover:bg-[#2c2e2e] hover:text-white rounded-md transition-colors duration-150 flex items-start group"
+                  className="cursor-pointer text-left w-full px-3 py-1 text-sm text-[#949592] hover:bg-[#2c2e2e] hover:text-white rounded-md transition-colors duration-150 flex items-start group"
                 >
                   <span className="mr-2 text-[#949592] group-hover:text-white">
                     {index + 1}.

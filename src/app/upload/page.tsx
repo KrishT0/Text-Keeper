@@ -38,7 +38,7 @@ function UploadPage() {
       toast.error("No file selected for upload");
       return;
     }
-    await uploadFile(files);
+    await uploadFile(files[0]);
     toast.success("File uploaded successfully");
     setFiles([]);
   };
@@ -66,9 +66,11 @@ function UploadPage() {
       await deleteFile(fileName);
       toast.success("File deleted successfully");
       setUploadedFiles((prevFiles) =>
-        prevFiles.filter((file) => file.file_name !== fileName)
+        prevFiles.filter((file) => file.file_name !== fileName),
       );
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error deleting file:", error);
+    }
   };
 
   const trimFileName = (fileName: string, maxLength: number = 30) => {
@@ -81,48 +83,41 @@ function UploadPage() {
     <div className="mt-10 px-2">
       <FileUpload setFiles={setFiles} />
       <div>
-        {files.length > 0 &&
-          files.map((file) => (
-            <div
-              key={file.name}
-              className="mt-3 flex flex-col sm:flex-row gap-2"
-            >
-              <div className="p-2 bg-[#1F2121] rounded-md w-full">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex gap-2">
-                    <p
-                      className="text-xs font-medium text-ellipsis"
-                      title={file.name}
-                    >
-                      {trimFileName(file.name)}
-                    </p>
-                    <p className="text-xs">{formatFileSize(file.size)}</p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setFiles([]);
-                      toast.info("File removed");
-                    }}
-                    className="text-xs cursor-pointer"
+        {files.length > 0 && (
+          <div className="mt-3 flex flex-col sm:flex-row gap-2">
+            <div className="p-2 bg-[#1F2121] rounded-md w-full sm:w-5/6 md:w-11/12">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex gap-2">
+                  <p
+                    className="text-xs font-medium text-ellipsis"
+                    title={files[0].name}
                   >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
+                    {trimFileName(files[0].name)}
+                  </p>
+                  <p className="text-xs">{formatFileSize(files[0].size)}</p>
                 </div>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFiles([]);
+                    toast.info("File removed");
+                  }}
+                  className="text-xs cursor-pointer"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
               </div>
             </div>
-          ))}
-      </div>
-      <div className="w-full flex justify-center">
-        <button
-          type="button"
-          onClick={() => uploadFileToServer()}
-          className="text-xs rounded-md p-2 mt-4 font-medium cursor-pointer text-[#191a1a] w-full bg-[#EDEDED] hover:bg-[#edededcb]"
-          disabled={files.length === 0}
-        >
-          Upload
-        </button>
+            <button
+              type="button"
+              onClick={uploadFileToServer}
+              className="text-xs rounded-md p-1 font-medium cursor-pointer text-[#191a1a] w-full sm:w-1/6 md:w-1/12 bg-[#EDEDED] hover:bg-[#edededcb]"
+            >
+              Upload
+            </button>
+          </div>
+        )}
       </div>
       <div>
         <h2 className="font-medium text-center mt-5">Files</h2>

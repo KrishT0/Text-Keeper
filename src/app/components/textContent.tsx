@@ -49,7 +49,7 @@ function TextContent({
 
   const textRef = useRef<HTMLTextAreaElement>(null);
 
-  const adjustTextareaHeight = () => {
+  useEffect(() => {
     const textarea = textRef.current;
     if (textarea) {
       textarea.style.height = "auto";
@@ -68,10 +68,6 @@ function TextContent({
         textarea.style.height = `${scrollHeight}px`;
       }
     }
-  };
-
-  useEffect(() => {
-    adjustTextareaHeight();
   }, [noteContent, isExpanded, isEditing]);
 
   const onClickCopy = () => {

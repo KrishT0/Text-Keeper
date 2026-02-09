@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 import { decrypt } from "@/app/utils/session";
 import { getUsername, logOutAction } from "./action";
 import LogoutBtn from "@/app/components/logoutBtn";
-import { Braces, FolderSync } from "lucide-react";
+import { FolderSync } from "lucide-react";
 
 const geistMono = Geist_Mono({
   weight: ["400", "600"],

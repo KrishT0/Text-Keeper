@@ -5,35 +5,35 @@ import { sql } from "@/app/utils/db";
 import { revalidatePath } from "next/cache";
 import { getUserIdFromSession } from "@/app/utils/session";
 
-export async function uploadFile(file: File[]) {
+export async function uploadFile(file: File) {
   try {
     const userId = await getUserIdFromSession();
 
     if (!userId) return { error: "User not authenticated" };
     if (!file) return { error: "No file provided" };
-    for (const item of file) {
-      const fileName = `${userId}/${item.name}`;
 
-      const arrayBuffer = await item.arrayBuffer();
-      const buffer = new Uint8Array(arrayBuffer);
-      const { data: storageData, error: storageError } =
-        await supabaseStorage.storage
-          .from("Text Keeper Storage")
-          .upload(fileName, buffer, {
-            upsert: true,
-            contentType: item.type,
-          });
+    const fileName = `${userId}/${file.name}`;
 
-      if (storageError) {
-        return { error: storageError.message };
-      }
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+    const { data: storageData, error: storageError } =
+      await supabaseStorage.storage
+        .from("Text Keeper Storage")
+        .upload(fileName, buffer, {
+          upsert: true,
+          contentType: file.type,
+        });
 
-      await sql`
+    if (storageError) {
+      return { error: storageError.message };
+    }
+
+    await sql`
       INSERT INTO files (user_id, file_name, file_size)
-      VALUES (${userId}, ${item.name}, ${item.size})
+      VALUES (${userId}, ${file.name}, ${file.size})
       ON CONFLICT (user_id, file_name)
       DO NOTHING`;
-    }
+
     revalidatePath("/upload");
 
     return {

@@ -12,7 +12,6 @@ const TextPage = async () => {
 
   const data = await getNotes(userId);
 
-  // Prepare TOC data (only header and id needed)
   const tocItems = data.map((item: TextItem) => ({
     header: item.header,
     id: item.id,
