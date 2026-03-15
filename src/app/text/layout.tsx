@@ -1,13 +1,13 @@
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { Geist_Mono } from "next/font/google";
-import AddText from "@/app/text/components/addText";
-import { cookies } from "next/headers";
-import { decrypt } from "@/app/utils/session";
-import { getUsername, logOutAction } from "./action";
 import LogoutBtn from "@/app/components/logoutBtn";
+import AddText from "@/app/text/components/addText";
+import { decrypt } from "@/app/utils/session";
 import { FolderSync } from "lucide-react";
+import { Geist_Mono } from "next/font/google";
+import { cookies } from "next/headers";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import { getUsername, logOutAction } from "./action";
 
 const geistMono = Geist_Mono({
   weight: ["400", "600"],
@@ -50,6 +50,7 @@ async function TextLayout({ children }: { children: React.ReactNode }) {
           <LogoutBtn logOutHandler={logOutHandler} />
         </div>
       </nav>
+      {/* <SearchIntercepter /> */}
       <AddText />
       {children}
     </div>

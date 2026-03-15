@@ -1,8 +1,8 @@
+import ToastProvider from "@/app/components/sonner";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { Rubik } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
-import ToastProvider from "@/app/components/sonner";
 import "./globals.css";
 
 const font = Rubik({
@@ -32,6 +32,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`max-w-225 h-screen mx-auto ${font.className} antialiased`}
+        suppressHydrationWarning
       >
         {children}
         <ToastProvider />

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
 type TocItem = {
   header: string;
@@ -19,7 +19,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
     const element = document.getElementById(id);
     if (element) {
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - 165;
+      const offsetPosition = elementPosition + window.scrollY - 165;
 
       window.scrollTo({
         top: offsetPosition,

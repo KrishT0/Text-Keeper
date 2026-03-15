@@ -1,9 +1,9 @@
-import { cookies } from "next/headers";
-import TextContent from "@/app/components/textContent";
-import { decrypt } from "@/app/utils/session";
-import { getNotes } from "@/app/text/action";
 import TableOfContents from "@/app/components/tableOfContents";
-
+import TextContent from "@/app/components/textContent";
+import { getNotes } from "@/app/text/action";
+import { decrypt } from "@/app/utils/session";
+import { cookies } from "next/headers";
+import SearchIntercepterWrapper from "./components/search-intercepter";
 import type { TextItem } from "./types";
 
 const TextPage = async () => {
@@ -15,10 +15,12 @@ const TextPage = async () => {
   const tocItems = data.map((item: TextItem) => ({
     header: item.header,
     id: item.id,
+    note: item.text,
   }));
 
   return (
     <>
+      <SearchIntercepterWrapper items={tocItems} />
       <div className="pb-8">
         {data.length > 0 ? (
           data.map((item: TextItem) => (
@@ -33,7 +35,6 @@ const TextPage = async () => {
           <p className="text-center text-sm pt-5">No Texts are created.</p>
         )}
       </div>
-
       {data.length > 0 && <TableOfContents items={tocItems} />}
     </>
   );
