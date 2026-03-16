@@ -29,8 +29,8 @@ function getSnippet(note: string, query: string) {
 
 function SearchIntercepter({ items }: SearchIntercepterProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [openSearchModal, setOpenSearchModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [openSearchModal, setOpenSearchModal] = useState<boolean>(false);
 
   const filteredHeaders = items.filter((item) =>
     item.header.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -56,7 +56,7 @@ function SearchIntercepter({ items }: SearchIntercepterProps) {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === "f") {
+      if ((e.ctrlKey || e.metaKey) && e.key === "f") {
         e.preventDefault();
         setOpenSearchModal(true);
         setTimeout(() => searchInputRef.current?.focus(), 100);

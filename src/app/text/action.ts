@@ -1,8 +1,8 @@
 "use server";
 
-import { revalidateTag, unstable_cache } from "next/cache";
 import { sql } from "@/app/utils/db";
 import { deleteSession, getUserIdFromSession } from "@/app/utils/session";
+import { revalidateTag, unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 
 import type { TextItem, TextType } from "./types";
@@ -63,7 +63,7 @@ export const getUsername = async (userId: string | unknown) =>
       return username;
     },
     [`username-${userId}`],
-    { tags: [`username-${userId}`] }
+    { tags: [`username-${userId}`] },
   )();
 
 export const getNotes = async (userId: string) =>
@@ -79,24 +79,24 @@ export const getNotes = async (userId: string) =>
     [`notes-${userId}`],
     {
       tags: [`notes-${userId}`],
-    }
+    },
   )();
 
-export async function checkUserAccess() {
-  const userId = await getUserIdFromSession();
-  if (!userId) {
-    return { hasAccess: false, message: "User not authenticated" };
-  }
+// export async function checkUserAccess() {
+//   const userId = await getUserIdFromSession();
+//   if (!userId) {
+//     return { hasAccess: false, message: "User not authenticated" };
+//   }
 
-  const queryResult =
-    await sql`SELECT ai_accessible FROM users WHERE id = ${userId}`;
-  const hasAIAccess = queryResult[0]?.ai_accessible;
-  if (hasAIAccess) {
-    return { hasAccess: true, message: "AI access granted" };
-  }
+//   const queryResult =
+//     await sql`SELECT ai_accessible FROM users WHERE id = ${userId}`;
+//   const hasAIAccess = queryResult[0]?.ai_accessible;
+//   if (hasAIAccess) {
+//     return { hasAccess: true, message: "AI access granted" };
+//   }
 
-  return {
-    hasAccess: false,
-    message: "AI access not granted",
-  };
-}
+//   return {
+//     hasAccess: false,
+//     message: "AI access not granted",
+//   };
+// }
