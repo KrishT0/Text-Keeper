@@ -81,22 +81,3 @@ export const getNotes = async (userId: string) =>
       tags: [`notes-${userId}`],
     },
   )();
-
-// export async function checkUserAccess() {
-//   const userId = await getUserIdFromSession();
-//   if (!userId) {
-//     return { hasAccess: false, message: "User not authenticated" };
-//   }
-
-//   const queryResult =
-//     await sql`SELECT ai_accessible FROM users WHERE id = ${userId}`;
-//   const hasAIAccess = queryResult[0]?.ai_accessible;
-//   if (hasAIAccess) {
-//     return { hasAccess: true, message: "AI access granted" };
-//   }
-
-//   return {
-//     hasAccess: false,
-//     message: "AI access not granted",
-//   };
-// }
