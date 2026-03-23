@@ -1,23 +1,23 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Geist_Mono } from "next/font/google";
+import { deleteNoteAction, editNoteAction } from "@/app/text/action";
 import {
-  Copy,
-  QrCode,
-  Link2,
-  X,
-  CircleX,
-  Trash2,
-  Edit2,
-  Save,
-  Undo2,
   ChevronDown,
   ChevronUp,
+  CircleX,
+  Copy,
+  Edit2,
+  Link2,
+  QrCode,
+  Save,
+  Trash2,
+  Undo2,
+  X,
 } from "lucide-react";
 import { useQRCode } from "next-qrcode";
+import { Geist_Mono } from "next/font/google";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { deleteNoteAction, editNoteAction } from "@/app/text/action";
 
 const geistMono = Geist_Mono({
   weight: ["400", "500", "600"],

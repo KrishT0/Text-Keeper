@@ -6,7 +6,7 @@ import { Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import { getUsername, logOutAction } from "./action";
 
 const geistMono = Geist_Mono({
@@ -50,9 +50,21 @@ async function TextLayout({ children }: { children: React.ReactNode }) {
           <LogoutBtn logOutHandler={logOutHandler} />
         </div>
       </nav>
-      {/* <SearchIntercepter /> */}
       <AddText />
-      {children}
+      <Suspense
+        fallback={
+          <p className="text-center text-sm pt-5">
+            Loading Texts
+            <span className="inline-flex gap-0.5 ml-0.5">
+              <span className="animate-bounce [animation-delay:-0.3s]">.</span>
+              <span className="animate-bounce [animation-delay:-0.15s]">.</span>
+              <span className="animate-bounce">.</span>
+            </span>
+          </p>
+        }
+      >
+        {children}
+      </Suspense>
     </div>
   );
 }
