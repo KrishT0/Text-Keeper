@@ -1,7 +1,6 @@
 import LogoutBtn from "@/app/components/logoutBtn";
 import AddText from "@/app/text/components/addText";
 import { decrypt } from "@/app/utils/session";
-import { FolderSync } from "lucide-react";
 import { Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import Image from "next/image";
@@ -44,9 +43,6 @@ async function TextLayout({ children }: { children: React.ReactNode }) {
           <p className="font-semibold">{username}</p>
         </div>
         <div className="flex align-center gap-4">
-          <Link href="upload" title="View as JSON">
-            <FolderSync className="cursor-pointer w-8 h-4 hover:text-green-400" />
-          </Link>
           <LogoutBtn logOutHandler={logOutHandler} />
         </div>
       </nav>
