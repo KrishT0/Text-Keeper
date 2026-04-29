@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
-  const isDeployed = !!process.env.NEXT_PUBLIC_VERCEL_URL;
+  const isDeployed = !!process.env.VERCEL_PROJECT_PRODUCTION_URL;
   const baseUrl = isDeployed
-    ? `${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : "localhost:3000";
+    ? `http://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000";
 
   return (
     <div className="flex flex-col h-full">
