@@ -48,9 +48,9 @@ function TextContent({
   const [needsExpansion, setNeedsExpansion] = useState<boolean>(false);
 
   const textRef = useRef<HTMLTextAreaElement>(null);
-  const isDeployed = !!process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  const isDeployed = !!process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL;
   const baseUrl = isDeployed
-    ? `http://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
     : "http://localhost:3000";
 
   useEffect(() => {

@@ -4,8 +4,8 @@ import Link from "next/link";
 export default function Home() {
   const isDeployed = !!process.env.VERCEL_PROJECT_PRODUCTION_URL;
   const baseUrl = isDeployed
-    ? `http://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "http://localhost:3000";
+    ? `${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "localhost:3000";
 
   return (
     <div className="flex flex-col h-full">
