@@ -1,7 +1,12 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
+  const isDeployed = !!process.env.NEXT_PUBLIC_VERCEL_URL;
+  const baseUrl = isDeployed
+    ? `${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    : "localhost:3000";
+
   return (
     <div className="flex flex-col h-full">
       <section className="h-1/2 sm:h-2/3 p-10 flex flex-col justify-center w-full">
@@ -10,7 +15,7 @@ export default function Home() {
         </h1>
         <hr className="w-1/2 sm:w-1/4 mt-7 mb-4" />
         <Link href="text" className="sm:text-lg w-fit flex items-center gap-2">
-          text-keeper.vercel.app/text
+          {baseUrl}/text
         </Link>
       </section>
       <section className="sm:h-1/3 flex gap-16 p-10 w-full">

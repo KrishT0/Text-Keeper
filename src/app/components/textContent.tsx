@@ -48,6 +48,10 @@ function TextContent({
   const [needsExpansion, setNeedsExpansion] = useState<boolean>(false);
 
   const textRef = useRef<HTMLTextAreaElement>(null);
+  const isDeployed = !!process.env.NEXT_PUBLIC_VERCEL_URL;
+  const baseUrl = isDeployed
+    ? `http://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    : "http://localhost:3000";
 
   useEffect(() => {
     const textarea = textRef.current;
@@ -76,7 +80,7 @@ function TextContent({
   };
 
   const onClickLink = () => {
-    const shareableLink = `${process.env.NEXT_PUBLIC_BASE_URL}/share/${id}`;
+    const shareableLink = `${baseUrl}/share/${id}`;
     navigator.clipboard.writeText(shareableLink);
     toast("Link copied to clipboard");
   };
@@ -245,7 +249,7 @@ function TextContent({
             </h4>
             {/* eslint-disable-next-line jsx-a11y/alt-text */}
             <Image
-              text={`${process.env.NEXT_PUBLIC_BASE_URL}/share/${id}`}
+              text={`${baseUrl}/share/${id}`}
               options={{ width: 200, margin: 2 }}
             />
           </div>
