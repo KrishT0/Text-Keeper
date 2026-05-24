@@ -1,8 +1,9 @@
-import TableOfContents from "@/app/components/tableOfContents";
 import TextContent from "@/app/components/textContent";
 import { getNotes } from "@/app/text/action";
+import TableOfContents from "@/app/text/components/tableOfContents";
 import { decrypt } from "@/app/utils/session";
 import { cookies } from "next/headers";
+import AIChat from "./components/ai-chat";
 import SearchIntercepterWrapper from "./components/search-intercepter";
 import type { TextItem } from "./types";
 
@@ -17,7 +18,7 @@ const TextPage = async () => {
     id: item.id,
     note: item.text,
   }));
-
+  console.log("Fetched notes data:", data);
   return (
     <>
       <SearchIntercepterWrapper items={tocItems} />
@@ -35,7 +36,13 @@ const TextPage = async () => {
           <p className="text-center text-sm pt-5">No Texts are created.</p>
         )}
       </div>
-      {data.length > 0 && <TableOfContents items={tocItems} />}
+
+      {data.length > 0 && (
+        <>
+          <AIChat items={tocItems} />
+          <TableOfContents items={tocItems} />
+        </>
+      )}
     </>
   );
 };

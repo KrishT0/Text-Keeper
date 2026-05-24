@@ -13,7 +13,7 @@ type TableOfContentsProps = {
 };
 
 export default function TableOfContents({ items }: TableOfContentsProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -64,6 +64,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
         </div>
       </div>
 
+      {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 border border-[#949592] cursor-pointer right-6 bg-[#1F2121] hover:bg-[#2D2F2F] text-white rounded-full p-3 shadow-lg transition-all duration-200 z-40"

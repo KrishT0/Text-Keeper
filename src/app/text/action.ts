@@ -66,7 +66,7 @@ export const getUsername = async (userId: string | unknown) =>
     { tags: [`username-${userId}`] },
   )();
 
-export const getNotes = async (userId: string) =>
+export const getNotes = async (userId: string | null) =>
   unstable_cache(
     async (): Promise<TextItem[]> => {
       const dt = (await sql`
