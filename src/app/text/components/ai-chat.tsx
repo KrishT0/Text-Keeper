@@ -64,7 +64,7 @@ export default function AIChat({ items }: TableOfContentsProps) {
         <div className="p-1 px-2 duration-300 transition-all ease-in-out">
           <h3 className="font-medium">Brief</h3>
           <p className="text-xs text-[#949592] font-medium mb-2">
-            Short summary of your notes
+            Select a note to view summary
           </p>
 
           <div className="mt-3 flex gap-1 flex-wrap max-h-[calc(70vh-60px)] overflow-y-auto scrollbar-hide">

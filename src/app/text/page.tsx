@@ -18,7 +18,7 @@ const TextPage = async () => {
     id: item.id,
     note: item.text,
   }));
-  console.log("Fetched notes data:", data);
+
   return (
     <>
       <SearchIntercepterWrapper items={tocItems} />
