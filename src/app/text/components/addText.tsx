@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, X } from "lucide-react";
 import { addTextAction } from "@/app/text/action";
+import { Plus, X } from "lucide-react";
+import { useState } from "react";
 
 function AddText() {
   const [text, setText] = useState("");
@@ -39,13 +39,13 @@ function AddText() {
         <textarea
           id="search-bar"
           placeholder="Paste your text here..."
-          className=" border-none outline-none m-2 h-10 text-sm resize-none scrollbar-hide"
+          className=" border-none m-1 outline-none h-14 text-sm resize-none scrollbar-hide"
           value={text}
           onChange={handleChange}
         />
-        <div className="flex gap-3 justify-end pr-3">
+        <div className="flex justify-end px-1">
           <Plus
-            className={`w-8 ${
+            className={`w-6 ${
               text
                 ? "cursor-pointer bg-[#EDEDED] text-[#191A1A] font-semibold"
                 : "bg-[#2D2F2F] text-[#636363]"
