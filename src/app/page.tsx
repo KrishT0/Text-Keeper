@@ -1,25 +1,26 @@
+import VideoModal from "@/app/components/video-modal";
 import Link from "next/link";
 
-const coreValues = [
+const features = [
   {
-    title: "VERCEL AI INTELLIGENCE",
+    title: "AI SUMMARIES",
     description:
-      "One-click summarization via Vercel AI Gateway. Extract key variables, logic paths, and actionable points from raw text automatically.",
+      "Select any note and get its key points instantly. No switching tabs, no copy-pasting into ChatGPT. Just click and read what matters.",
   },
   {
-    title: "ADVANCED MANAGEMENT",
+    title: "INSTANT COPY",
     description:
-      "Per-snippet tagging for categorization and instant clipboard copy functionality for seamless workflow integration.",
+      "One click copies any note straight to your clipboard. No selecting, no dragging. Just copy and keep moving.",
   },
   {
-    title: "MOBILE PRESENCE",
+    title: "QR SHARING",
     description:
-      "QR code generation for instant mobile sharing. Access your snippets on any mobile device without manual typing.",
+      "Generate a QR code for any note in one click. Scan from your phone and get the content immediately. No login, no typing, no friction.",
   },
   {
-    title: "SECURE ACCESS",
+    title: "SECURE BY DEFAULT",
     description:
-      "JWT-based secure access control and AES-256 encryption. Your data is protected by industry- standard stateless authentication.",
+      "JWT based authentication keeps your notes private. No third party logins, no OAuth complexity. Sign in and your data stays yours.",
   },
 ];
 
@@ -28,7 +29,9 @@ export default function Home() {
     <div className="h-full px-5">
       <nav className="text-xs flex justify-between items-center py-4">
         <p>TEXT KEEPER</p>
-        <Link href="/text">GET STARTED</Link>
+        <Link href="/text" className="hover:text-[#949592] transition-colors">
+          GET STARTED
+        </Link>
       </nav>
 
       {/* Hero section */}
@@ -41,15 +44,19 @@ export default function Home() {
           <h1>EVERYWHERE.</h1>
         </div>
         <p className="text-sm sm:w-4/5 md:w-3/5">
-          Minimalist snippet manager with CRUD operations and Cloud PostgreSQL
-          sync. No clutter. Just high-contrast productivity accessible from any
-          device. Minimalist snippet manager with CRUD operations and Cloud
-          PostgreSQL sync. No clutter. Just high-contrast productivity
-          accessible from any device.
+          Snippets disappear into Slack threads, browser tabs, and forgotten
+          docs. Text Keeper gives you one place to paste, organize, and share
+          text instantly. Synced across every device, accessible from anywhere,
+          built for developers who move fast and hate friction.
         </p>
-        <div className="underline cursor-pointer underline-offset-2 flex gap-8 text-xs">
-          <Link href="/text">GET STARTED</Link>
-          <p>VIEW DEMO</p>
+        <div className="underline underline-offset-2 flex gap-8 text-xs">
+          <Link
+            href="/text"
+            className="cursor-pointer hover:text-[#949592] transition-colors"
+          >
+            GET STARTED
+          </Link>
+          <VideoModal src="/demo.mp4" />
         </div>
       </section>
 
@@ -58,9 +65,9 @@ export default function Home() {
         id="core-values"
         className="max-w-195 mx-auto flex flex-col xs:flex-row"
       >
-        <h2 className="text-xl xs:w-1/3 font-medium">CORE VALUES</h2>
+        <h2 className="text-xl xs:w-1/3 font-medium">FEATURES</h2>
         <div className="w-[90%] mt-8 xs:mt-0 sm:w-1/2 flex flex-col gap-16 xs:gap-12">
-          {coreValues.map((item) => (
+          {features.map((item) => (
             <div key={item.title}>
               <p className="font-medium mb-3">{item.title}</p>
               <p className="text-sm">{item.description}</p>
@@ -72,15 +79,22 @@ export default function Home() {
       {/* Bottom section */}
       <section
         id="bottom"
-        className="h-2/3 max-w-195 mx-auto flex flex-col gap-5 text-center justify-center"
+        className="h-4/5 max-w-195 mx-auto flex flex-col gap-5 text-center justify-center"
       >
-        <div className="text-2xl max-w-[95%] xs:max-w-[70%] sm:max-w-2/3 mx-auto sm:text-2xl md:text-3xl  font-semibold">
-          <h2>EFFICIENCY IS THE ONLY THE ONLY METRICS THAT MATTERS.</h2>
+        <div className="text-2xl sm:text-2xl md:text-3xl font-semibold">
+          <h2>EVERY SNIPPET SAVED.</h2>
+          <h2>NOTHING LOST. EVER AGAIN.</h2>
         </div>
-        <p className="text-sm xs:w-3/5 mx-auto">
-          Minimalist snippet manager with CRUD operations and Cloud PostgreSQL
-          sync. No clutter. Just
+        <p className="text-sm xs:w-4/5 mx-auto">
+          Never hunt through chat history or reopen closed tabs again. Your text
+          is stored, synced, and ready whenever you need it.
         </p>
+        <Link
+          href="/text"
+          className="mt-10 underline text-xs font-medium underline-offset-2 hover:text-[#949592] transition-colors"
+        >
+          START PASTING
+        </Link>
       </section>
 
       <footer>
@@ -90,7 +104,12 @@ export default function Home() {
             &copy; {new Date().getFullYear()} Text Keeper. All rights reserved.
           </p>
           <p className="text-xs text-center py-4">
-            <Link href="/privacy">Privacy Policy</Link>
+            <Link
+              href="/privacy"
+              className="hover:text-[#949592] transition-colors"
+            >
+              Privacy Policy
+            </Link>
           </p>
         </div>
       </footer>
