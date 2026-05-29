@@ -36,7 +36,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
     <>
       {/* TOC Panel */}
       <div
-        className={`fixed max-h-[35vh] w-[320px] bottom-20 border-2 border-[#2D2F2F] right-6 scrollbar-hide bg-[#1F2121] overflow-y-auto rounded-lg shadow-lg transition-all duration-300 ease-in-out z-40 ${
+        className={`fixed max-h-[35vh] w-[320px] bottom-20 border-[3px] border-[#f5f5f535] right-6 scrollbar-hide bg-[#1F2121] overflow-y-auto rounded-lg shadow-lg transition-all duration-300 ease-in-out z-40 ${
           isOpen
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 translate-y-4 pointer-events-none"
@@ -77,7 +77,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
 
       {isOpen && (
         <div
-          className="fixed inset-0 bg-[#000000a9] bg-opacity-20 z-30 transition-opacity duration-300"
+          className="fixed inset-0 backdrop-blur-lg bg-opacity-20 z-30 transition-opacity duration-300"
           onClick={() => setIsOpen(false)}
         />
       )}

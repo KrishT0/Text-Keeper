@@ -80,12 +80,12 @@ export default function VideoModal({ src }: VideoModalProps) {
       {/* Backdrop */}
       {open && (
         <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center px-4"
+          className="fixed inset-0 z-50 backdrop-blur-lg flex items-center justify-center px-4"
           onClick={handleClose}
         >
           {/* Modal */}
           <div
-            className="relative w-full max-w-3xl bg-[#111111] rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl"
+            className="relative animate-scale-in w-full max-w-3xl border-[3px] border-[#f5f5f535] bg-[#191A1A] rounded-2xl overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}

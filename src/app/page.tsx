@@ -37,9 +37,9 @@ export default function Home() {
       {/* Hero section */}
       <section
         id="hero"
-        className="h-9/12 max-w-195 mx-auto flex flex-col gap-8 justify-center"
+        className="min-h-9/12 max-w-195 mx-auto flex flex-col gap-8 justify-center"
       >
-        <div className="text-4xl sm:text-5xl md:text-5xl font-semibold">
+        <div className="text-4xl sm:text-5xl md:text-5xl font-semibold animate-fade-in">
           <h1>YOUR TEXT,</h1>
           <h1>EVERYWHERE.</h1>
         </div>
@@ -56,7 +56,7 @@ export default function Home() {
           >
             GET STARTED
           </Link>
-          <VideoModal src="/demo.mp4" />
+          <VideoModal src="https://res.cloudinary.com/dth9jxnnr/video/upload/v1779912709/demo_ll8xxz.mp4" />
         </div>
       </section>
 
@@ -79,7 +79,7 @@ export default function Home() {
       {/* Bottom section */}
       <section
         id="bottom"
-        className="h-4/5 max-w-195 mx-auto flex flex-col gap-5 text-center justify-center"
+        className="min-h-4/5 max-w-195 mx-auto flex flex-col gap-5 text-center justify-center"
       >
         <div className="text-2xl sm:text-2xl md:text-3xl font-semibold">
           <h2>EVERY SNIPPET SAVED.</h2>
@@ -99,7 +99,7 @@ export default function Home() {
 
       <footer>
         <hr className="w-full text-[#949592]" />
-        <div className="flex justify-between">
+        <div className="py-2 pb-6 flex justify-between">
           <p className="text-xs text-center py-4">
             &copy; {new Date().getFullYear()} Text Keeper. All rights reserved.
           </p>

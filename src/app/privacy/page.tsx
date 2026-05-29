@@ -107,14 +107,14 @@ export default function PrivacyPage() {
           </p>
           <ul className="text-neutral-400 text-sm list-disc pl-4 mt-1">
             <li>
-              <span className="text-white">Neon</span> — database hosting
+              <span className="text-white">Neon</span>: database hosting
             </li>
             <li>
-              <span className="text-white">Vercel</span> — application hosting
+              <span className="text-white">Vercel</span>: application hosting
               and deployment
             </li>
             <li>
-              <span className="text-white">OpenAI</span> — AI summary feature
+              <span className="text-white">OpenAI</span>: AI summary feature
               only, note content is not retained
             </li>
           </ul>
@@ -129,15 +129,11 @@ export default function PrivacyPage() {
             here:{" "}
             <a
               href="mailto:krshnabiswal619@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-white underline underline-offset-4 hover:text-neutral-300 transition-colors"
             >
-              <a
-                href="mailto:krshnabiswal619@gmail.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                mail
-              </a>
+              mail
             </a>
           </div>
         </section>
