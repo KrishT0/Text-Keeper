@@ -106,7 +106,7 @@ export default function Home() {
           <p className="text-xs text-center py-4">
             <Link
               href="/privacy"
-              className="hover:text-[#949592] transition-colors"
+              className="hover:text-[#949592] underline underline-offset-2 transition-colors"
             >
               Privacy Policy
             </Link>

@@ -10,7 +10,7 @@ export default function PrivacyPage() {
           </h1>
           <Link
             href="/"
-            className="text-sm underline underline-offset-2 text-neutral-300 hover:text-[#949592] transition-colors"
+            className="text-xs underline underline-offset-2 text-neutral-300 hover:text-[#949592] transition-colors"
           >
             Back to Home
           </Link>
@@ -140,7 +140,7 @@ export default function PrivacyPage() {
 
         <hr className="w-full text-[#949592] mb-6" />
 
-        <p className="text-neutral-400 text-center text-sm">
+        <p className=" text-center text-xs">
           © 2026 Text Keeper. All rights reserved.
         </p>
       </div>

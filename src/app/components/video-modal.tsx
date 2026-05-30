@@ -103,7 +103,8 @@ export default function VideoModal({ src }: VideoModalProps) {
               className="w-full aspect-video object-cover"
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
-              onEnded={() => setPlaying(false)}
+              loop
+              // onEnded={() => setPlaying(false)}
               onClick={togglePlay}
             />
 
