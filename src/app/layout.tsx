@@ -12,7 +12,8 @@ const font = Rubik({
 
 export const metadata: Metadata = {
   title: "Text Keeper",
-  description: "A simple text storage app",
+  description:
+    "Paste once. Access anywhere. Text Keeper syncs your notes, snippets, and code across every device.",
 };
 
 export const viewport: Viewport = {

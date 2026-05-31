@@ -1,6 +1,7 @@
 import LogoutBtn from "@/app/components/logoutBtn";
 import AddText from "@/app/text/components/addText";
 import { decrypt } from "@/app/utils/session";
+import { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import Image from "next/image";
@@ -12,6 +13,11 @@ const geistMono = Geist_Mono({
   weight: ["400", "600"],
   subsets: ["latin"],
 });
+
+export const metadata: Metadata = {
+  title: "Dashboard - Text Keeper",
+  description: "Manage your saved notes and snippets.",
+};
 
 async function TextLayout({ children }: { children: React.ReactNode }) {
   const cookiesStore = await cookies();

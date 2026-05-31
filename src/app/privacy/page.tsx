@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         <hr className="w-full text-[#949592] mt-5 mb-10" />
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase tracking-widest mb-1">
+          <h2 className="text-sm font-semibold uppercase mb-1">
             Overview
           </h2>
           <p className="text-neutral-400 text-sm">
@@ -30,7 +30,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase tracking-widest mb-1">
+          <h2 className="text-sm font-semibold uppercase mb-1">
             What We Collect
           </h2>
           <p className="text-neutral-400 text-sm">
@@ -47,7 +47,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase tracking-widest mb-1">
+          <h2 className="text-sm font-semibold uppercase mb-1">
             How We Use Your Data
           </h2>
           <p className="text-neutral-400 text-sm">
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase tracking-widest mb-1">
+          <h2 className="text-sm font-semibold uppercase mb-1">
             Data Storage
           </h2>
           <p className="text-neutral-400 text-sm">
@@ -77,7 +77,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase tracking-widest mb-1">
+          <h2 className="text-sm font-semibold uppercase mb-1">
             Authentication
           </h2>
           <p className="text-neutral-400 text-sm">
@@ -88,7 +88,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase tracking-widest mb-1">
+          <h2 className="text-sm font-semibold uppercase mb-1">
             Data Deletion
           </h2>
           <p className="text-neutral-400 text-sm">
@@ -99,7 +99,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase tracking-widest mb-1">
+          <h2 className="text-sm font-semibold uppercase mb-1">
             Third Party Services
           </h2>
           <p className="text-neutral-400 text-sm">
@@ -121,7 +121,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase tracking-widest mb-1">
+          <h2 className="text-sm font-semibold uppercase mb-1">
             Contact
           </h2>
           <div className="text-neutral-400 text-sm">
