@@ -10,7 +10,13 @@ const font = Rubik({
   subsets: ["latin"],
 });
 
+const SITE_URL =
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "") || "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Text Keeper",
   description:
     "Paste once. Access anywhere. Text Keeper syncs your notes, snippets, and code across every device.",
