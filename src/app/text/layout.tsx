@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dashboard - Text Keeper",
+  title: "Workspace - Text Keeper",
   description: "Manage your saved notes and snippets.",
 };
 

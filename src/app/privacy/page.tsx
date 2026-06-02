@@ -19,9 +19,7 @@ export default function PrivacyPage() {
         <hr className="w-full text-[#949592] mt-5 mb-10" />
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase mb-1">
-            Overview
-          </h2>
+          <h2 className="text-sm font-semibold uppercase mb-1">Overview</h2>
           <p className="text-neutral-400 text-sm">
             Text Keeper is a personal notes and clipboard sync tool built for
             developers. This page explains what data we collect, how we use it,
@@ -67,9 +65,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase mb-1">
-            Data Storage
-          </h2>
+          <h2 className="text-sm font-semibold uppercase mb-1">Data Storage</h2>
           <p className="text-neutral-400 text-sm">
             Your data is stored in a PostgreSQL database hosted on Neon. Access
             is restricted and your notes are never shared with third parties.
@@ -121,9 +117,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-sm font-semibold uppercase mb-1">
-            Contact
-          </h2>
+          <h2 className="text-sm font-semibold uppercase mb-1">Contact</h2>
           <div className="text-neutral-400 text-sm">
             If you have any questions about this policy or your data, reach out
             here:{" "}

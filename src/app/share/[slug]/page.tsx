@@ -1,6 +1,6 @@
 import TextContent from "@/app/components/textContent";
-import { sql } from "@/app/utils/db";
 import NoNoteFound from "@/app/share/[slug]/components/noNoteFound";
+import { sql } from "@/app/utils/db";
 import type { PageProps } from "./type";
 
 async function NotePage({ params }: PageProps) {
