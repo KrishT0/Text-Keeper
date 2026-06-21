@@ -72,7 +72,7 @@ export default function AIChat({ items }: TableOfContentsProps) {
               <button
                 key={item.id}
                 disabled={isLoading}
-                className={`text-xs text-black w-fit rounded-md px-2 bg-white duration-150 mb-2 
+                className={`text-xs text-black w-fit rounded-md px-2 bg-white duration-150 mb-2
           ${
             isLoading
               ? "cursor-not-allowed opacity-50"

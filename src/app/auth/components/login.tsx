@@ -1,10 +1,10 @@
 "use client";
 
 import { login } from "@/app/auth/action";
-import { useActionState, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import type { authFormType } from "../type";
 import { Eye, EyeClosed } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
+import type { authFormType } from "../type";
 
 function LoginForm({ toggleAUthForm }: authFormType) {
   const initialState = {
@@ -70,12 +70,12 @@ function LoginForm({ toggleAUthForm }: authFormType) {
           )}
           {isPasswordVisible ? (
             <EyeClosed
-              className="absolute h-4 right-1 cursor-pointer bottom-[9px]"
+              className="absolute h-4 right-1 cursor-pointer bottom-2.25"
               onClick={togglePassworrdVisibility}
             />
           ) : (
             <Eye
-              className="absolute h-4 right-1 cursor-pointer bottom-[9px]"
+              className="absolute h-4 right-1 cursor-pointer bottom-2.25"
               onClick={togglePassworrdVisibility}
             />
           )}

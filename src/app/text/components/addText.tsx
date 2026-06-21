@@ -47,7 +47,7 @@ function AddText() {
           <Plus
             className={`w-6 ${
               text
-                ? "cursor-pointer bg-[#EDEDED] text-[#191A1A] font-semibold"
+                ? "cursor-pointer bg-[#EDEDED] text-[#191A1A] font-medium"
                 : "bg-[#2D2F2F] text-[#636363]"
             } rounded-md p-1`}
             onClick={text ? handleAddTextClick : undefined}
@@ -58,7 +58,7 @@ function AddText() {
         <div className="fixed inset-0 flex items-center justify-center bg-[#000000a9] z-50">
           <div className="bg-[#1F2121] rounded-lg p-6">
             <div className="flex justify-between items-center gap-10 mb-8">
-              <h4 className="mb-0 font-semibold text-[#949592]">
+              <h4 className="mb-0 font-medium text-[#949592]">
                 Enter heading for the text
               </h4>
               <button
@@ -80,7 +80,7 @@ function AddText() {
             />
             <button
               disabled={!heading}
-              className={`px-4 py-1 text-sm font-semibold cursor-pointer bg-[#3A3C3C] text-[#C5C8C6] rounded hover:bg-[#4A4C4C] ${
+              className={`px-4 py-1 w-full text-sm font-medium cursor-pointer bg-[#EDEDED] text-[#191A1A] rounded hover:bg-[#edededa7] ${
                 !heading && "opacity-50 cursor-not-allowed!"
               }`}
               onClick={handleAddText}
