@@ -4,10 +4,10 @@ import { login } from "@/app/auth/action";
 import { Eye, EyeClosed } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
-import type { authFormType } from "../type";
+import type { authFormType, AuthFormState } from "../type";
 
 function LoginForm({ toggleAUthForm }: authFormType) {
-  const initialState = {
+  const initialState: AuthFormState = {
     errors: {},
     values: { username: "", password: "" },
   };
@@ -50,34 +50,36 @@ function LoginForm({ toggleAUthForm }: authFormType) {
             </p>
           )}
         </div>
-        <div className="flex relative flex-col gap-2">
+        <div className="flex flex-col gap-2">
           <label htmlFor="password" className="text-sm">
             Password
           </label>
-          <input
-            id="password"
-            name="password"
-            type={isPasswordVisible ? "input" : "password"}
-            placeholder="Enter your password"
-            defaultValue={state?.values?.password}
-            autoComplete="off"
-            className="p-2 rounded-md bg-[#1F2121] text-sm outline-none"
-          />
+          <div className="flex w-full relative flex-col gap-2">
+            <input
+              id="password"
+              name="password"
+              type={isPasswordVisible ? "input" : "password"}
+              placeholder="Enter your password"
+              defaultValue={state?.values?.password}
+              autoComplete="off"
+              className="p-2 rounded-md bg-[#1F2121] text-sm outline-none"
+            />
+            {isPasswordVisible ? (
+              <EyeClosed
+                className="absolute h-4 right-1 cursor-pointer bottom-2.25"
+                onClick={togglePassworrdVisibility}
+              />
+            ) : (
+              <Eye
+                className="absolute h-4 right-1 cursor-pointer bottom-2.25"
+                onClick={togglePassworrdVisibility}
+              />
+            )}
+          </div>
           {state?.errors?.password && (
             <p className="text-xs font-semibold text-red-400 mt-1">
               {state.errors.password[0]}
             </p>
-          )}
-          {isPasswordVisible ? (
-            <EyeClosed
-              className="absolute h-4 right-1 cursor-pointer bottom-2.25"
-              onClick={togglePassworrdVisibility}
-            />
-          ) : (
-            <Eye
-              className="absolute h-4 right-1 cursor-pointer bottom-2.25"
-              onClick={togglePassworrdVisibility}
-            />
           )}
         </div>
         <button

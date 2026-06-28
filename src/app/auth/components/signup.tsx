@@ -4,14 +4,16 @@ import { signUp } from "@/app/auth/action";
 import { Eye, EyeClosed } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
-import type { authFormType } from "../type";
+import type { authFormType, AuthFormState } from "../type";
 
 function SignUp({ toggleAUthForm }: authFormType) {
-  const initialState = {
+  const initialState: AuthFormState = {
     errors: {},
-    values: { username: "", password: "" },
+    values: { username: "", password: "", confirmPassword: "" },
   };
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
   const [state, formAction, isPending] = useActionState(signUp, initialState);
   const router = useRouter();
 
@@ -23,6 +25,10 @@ function SignUp({ toggleAUthForm }: authFormType) {
 
   const togglePassworrdVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setIsConfirmPasswordVisible((prev) => !prev);
   };
 
   return (
@@ -50,34 +56,68 @@ function SignUp({ toggleAUthForm }: authFormType) {
             </p>
           )}
         </div>
-        <div className="flex relative flex-col gap-2">
+        <div className="flex flex-col gap-2">
           <label htmlFor="password" className="text-sm">
             Password
           </label>
-          <input
-            id="password"
-            name="password"
-            type={isPasswordVisible ? "input" : "password"}
-            placeholder="Enter your password"
-            defaultValue={state?.values?.password}
-            autoComplete="off"
-            className="p-2 rounded-md bg-[#1F2121] text-sm outline-none"
-          />
+          <div className="flex relative flex-col gap-2 w-full">
+            <input
+              id="password"
+              name="password"
+              type={isPasswordVisible ? "input" : "password"}
+              placeholder="Enter your password"
+              defaultValue={state?.values?.password}
+              autoComplete="off"
+              className="p-2 rounded-md bg-[#1F2121] text-sm outline-none"
+            />
+            {isPasswordVisible ? (
+              <EyeClosed
+                className="absolute h-4 right-1 cursor-pointer bottom-2.25"
+                onClick={togglePassworrdVisibility}
+              />
+            ) : (
+              <Eye
+                className="absolute h-4 right-1 cursor-pointer bottom-2.25"
+                onClick={togglePassworrdVisibility}
+              />
+            )}
+          </div>
           {state?.errors?.password && (
             <p className="text-xs font-semibold text-red-400 mt-1">
               {state.errors.password[0]}
             </p>
           )}
-          {isPasswordVisible ? (
-            <EyeClosed
-              className="absolute h-4 right-1 cursor-pointer bottom-2.25"
-              onClick={togglePassworrdVisibility}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="confirm-password" className="text-sm">
+            Confirm Password
+          </label>
+          <div className="flex relative flex-col gap-2 w-full">
+            <input
+              id="confirm-password"
+              name="confirmPassword"
+              type={isConfirmPasswordVisible ? "input" : "password"}
+              placeholder="Enter your password"
+              defaultValue={state?.values?.confirmPassword}
+              autoComplete="off"
+              className="p-2 rounded-md bg-[#1F2121] text-sm outline-none"
             />
-          ) : (
-            <Eye
-              className="absolute h-4 right-1 cursor-pointer bottom-2.25"
-              onClick={togglePassworrdVisibility}
-            />
+            {isConfirmPasswordVisible ? (
+              <EyeClosed
+                className="absolute h-4 right-1 cursor-pointer bottom-2.25"
+                onClick={toggleConfirmPasswordVisibility}
+              />
+            ) : (
+              <Eye
+                className="absolute h-4 right-1 cursor-pointer bottom-2.25"
+                onClick={toggleConfirmPasswordVisibility}
+              />
+            )}
+          </div>
+          {state?.errors?.confirmPassword && (
+            <p className="text-xs font-semibold text-red-400 mt-1">
+              {state.errors.confirmPassword[0]}
+            </p>
           )}
         </div>
         <button
