@@ -208,7 +208,7 @@ function TextContent({
           readOnly={!isEditing}
           value={noteContent}
           onChange={handleTextChange}
-          className={`${geistMono.className} scrollbar-hide p-4 w-full whitespace-pre-wrap wrap-break-words text-xs text-[#C5C8C6] resize-none font-medium ${
+          className={`${geistMono.className} scrollbar-hide p-4 w-full whitespace-pre-wrap text-xs text-[#C5C8C6] resize-none font-medium ${
             needsExpansion && !isExpanded && !isEditing
               ? "overflow-hidden"
               : "overflow-hidden"
