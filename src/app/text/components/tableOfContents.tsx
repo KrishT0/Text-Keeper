@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type TocItem = {
   header: string;
@@ -14,6 +14,17 @@ type TableOfContentsProps = {
 
 export default function TableOfContents({ items }: TableOfContentsProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isOpen]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);

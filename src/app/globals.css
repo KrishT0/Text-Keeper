@@ -1,49 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  --background: #191a1a;
-  --foreground: #ededed;
+    --background: #191a1a;
+    --foreground: #ededed;
 }
 
 @theme {
-  --breakpoint-xs: 35rem;
+    --breakpoint-xs: 35rem;
 
-  --animate-fade-in: fadeIn 0.4s ease forwards;
-  --animate-scale-in: scaleIn 0.15s ease forwards;
+    --animate-fade-in: fadeIn 0.4s ease forwards;
+    --animate-scale-in: scaleIn 0.15s ease forwards;
 
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: translateY(8px);
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 
-  @keyframes scaleIn {
-    0% {
-      opacity: 0;
-      transform: scale(0.95);
+    @keyframes scaleIn {
+        0% {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
     }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
+}
+
+html {
+    scrollbar-gutter: stable;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+    background: var(--background);
+    color: var(--foreground);
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

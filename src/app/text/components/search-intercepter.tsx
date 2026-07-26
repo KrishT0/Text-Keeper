@@ -2,7 +2,7 @@
 
 import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 import { ArrowRight, CircleDot, Search } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type TocItem = {
   header: string;
@@ -29,20 +29,25 @@ function getSnippet(note: string, query: string) {
 
 function SearchIntercepter({ items }: SearchIntercepterProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
+
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [openSearchModal, setOpenSearchModal] = useState<boolean>(false);
 
-  const filteredHeaders = items.filter((item) =>
-    item.header.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const filteredHeaders = useMemo(() => {
+    if (!openSearchModal) return [];
+    return items.filter((item) =>
+      item.header.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+  }, [openSearchModal, items, searchQuery]);
 
-  const filteredNotes = searchQuery
-    ? items.filter(
-        (item) =>
-          item.note &&
-          item.note.toLowerCase().includes(searchQuery.toLowerCase()),
-      )
-    : [];
+  const filteredNotes = useMemo(() => {
+    if (!openSearchModal || !searchQuery) return [];
+    return items.filter(
+      (item) =>
+        item.note &&
+        item.note.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+  }, [openSearchModal, searchQuery, items]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -55,8 +60,19 @@ function SearchIntercepter({ items }: SearchIntercepterProps) {
   };
 
   useEffect(() => {
+    if (!openSearchModal) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [openSearchModal]);
+
+  useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "f") {
         e.preventDefault();
         setOpenSearchModal(true);
         setTimeout(() => searchInputRef.current?.focus(), 100);
@@ -80,6 +96,9 @@ function SearchIntercepter({ items }: SearchIntercepterProps) {
           onClick={() => setOpenSearchModal(false)}
         >
           <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Search notes"
             className="border-[3px] border-[#f5f5f535] bg-[#191A1A] h-90 w-115 p-2 rounded-lg"
             onClick={(e) => e.stopPropagation()}
           >
