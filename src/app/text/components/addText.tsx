@@ -3,6 +3,7 @@
 import { addTextAction } from "@/app/text/action";
 import { Plus, X } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 function AddText() {
   const [text, setText] = useState("");
@@ -30,6 +31,7 @@ function AddText() {
     setText("");
     setHeading("");
     await addTextAction({ header: heading, text });
+    toast("Note added successfully");
     closeModal();
   };
 
