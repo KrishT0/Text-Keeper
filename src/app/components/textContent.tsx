@@ -94,7 +94,13 @@ function TextContent({
   };
 
   const deleteNoteHandler = async () => {
-    await deleteNoteAction(id);
+    const result = await deleteNoteAction(id);
+
+    if (result.error) {
+      toast.error(result.error);
+      return;
+    }
+
     toast("Note deleted successfully");
   };
 
@@ -115,7 +121,13 @@ function TextContent({
   const handleSave = async () => {
     if (!hasChanges) return;
 
-    await editNoteAction(id, heading, noteContent);
+    const result = await editNoteAction(id, heading, noteContent);
+
+    if (result.error) {
+      toast.error(result.error);
+      return;
+    }
+
     toast("Changes saved successfully");
     setIsEditing(false);
     setHasChanges(false);

@@ -33,7 +33,15 @@ export async function deleteNoteAction(id: string) {
 
   if (!userId) return { error: "User not authenticated" };
 
-  await sql`DELETE FROM notes WHERE id = ${id}`;
+  const deletedNotes = await sql`
+    DELETE FROM notes
+    WHERE id = ${id} AND user_id = ${userId}
+    RETURNING id
+  `;
+
+  if (deletedNotes.length === 0) {
+    return { error: "Note not found" };
+  }
 
   revalidateTag(`notes-${userId}`);
   return { success: true };
@@ -44,11 +52,16 @@ export async function editNoteAction(id: string, header: string, text: string) {
 
   if (!userId) return { error: "User not authenticated" };
 
-  await sql`
+  const updatedNotes = await sql`
     UPDATE notes
     SET header = ${header}, text = ${text}
-    WHERE id = ${id}
+    WHERE id = ${id} AND user_id = ${userId}
+    RETURNING id
   `;
+
+  if (updatedNotes.length === 0) {
+    return { error: "Note not found" };
+  }
 
   revalidateTag(`notes-${userId}`);
   return { success: true };
