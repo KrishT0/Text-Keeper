@@ -2,6 +2,7 @@
 
 import { Sparkles, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 type TocItem = {
   header: string;
@@ -17,6 +18,7 @@ export default function AIChat({ items }: TableOfContentsProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [responses, setResponses] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -31,11 +33,17 @@ export default function AIChat({ items }: TableOfContentsProps) {
 
   const callAiApi = async (note: string) => {
     setIsLoading(true);
+
     const response = await fetch("/api/ai", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ note }),
     });
+
+    if (response.status === 401) {
+      router.push("/auth");
+      return;
+    }
 
     if (!response.body) {
       setResponses("No response body.");

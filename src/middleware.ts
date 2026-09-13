@@ -24,9 +24,19 @@ export async function middleware(req: NextRequest) {
     }
   }
 
+  if (pathname === "/api/ai") {
+    if (!cookie) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const session = await decrypt(cookie);
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/auth", "/text"],
+  matcher: ["/auth", "/text", "/api/ai"],
 };
