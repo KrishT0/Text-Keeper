@@ -10,6 +10,7 @@ Text Keeper is a lightweight workspace for saving, organizing, and sharing text 
 - **Instant copy** — Copy note content directly to the clipboard.
 - **QR and link sharing** — Create a shareable URL or QR code for a note.
 - **Expiring share links** — Set links to expire after one hour, one day, a custom number of minutes, or never.
+- **Fast note search** — Use `Ctrl + F` or `Cmd + F` to search note headings and content, preview matching snippets, and jump directly to a note.
 - **Responsive interface** — Optimized for desktop and mobile layouts.
 - **Accessible feedback** — Loading states, toast notifications, error handling, and empty states.
 - **Privacy page** — Documents the data handled by the application and its third-party services.
@@ -131,6 +132,7 @@ Text Keeper handles user accounts and private note content. Before deploying to 
 - Notes are cached and revalidated by user-specific cache tags.
 - Share-link expiry is stateless: temporary links carry a signed token with an expiration timestamp, so no additional database column is required.
 - The public share route validates the token signature, note ID, and expiration before returning note content.
+- The desktop search modal performs case-insensitive searches across note headings and content, displays contextual snippets, and smoothly scrolls to matching notes.
 - The `/text` workspace and `/api/ai` endpoint are protected by the authentication middleware.
 
 ## Contributing
