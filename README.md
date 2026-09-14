@@ -9,6 +9,7 @@ Text Keeper is a lightweight workspace for saving, organizing, and sharing text 
 - **AI summaries** — Generate concise summaries of saved notes with a streaming response.
 - **Instant copy** — Copy note content directly to the clipboard.
 - **QR and link sharing** — Create a shareable URL or QR code for a note.
+- **Expiring share links** — Set links to expire after one hour, one day, a custom number of minutes, or never.
 - **Responsive interface** — Optimized for desktop and mobile layouts.
 - **Accessible feedback** — Loading states, toast notifications, error handling, and empty states.
 - **Privacy page** — Documents the data handled by the application and its third-party services.
@@ -119,6 +120,8 @@ Text Keeper handles user accounts and private note content. Before deploying to 
 - Add rate limiting to authentication and AI endpoints.
 - Configure secure, HTTP-only, same-site cookies for production.
 - Review the public sharing model before storing sensitive information in shareable notes.
+- Expiring links use signed server-generated tokens; invalid or expired tokens are rejected by the public share route.
+- Treat `Never` links as public, long-lived links and revoke or delete the note when access should end.
 - Keep the privacy policy aligned with the actual behavior and retention policies of the selected AI provider.
 
 ## Development notes
@@ -126,6 +129,8 @@ Text Keeper handles user accounts and private note content. Before deploying to 
 - Server Actions are used for authentication and note mutations.
 - The AI summary feature is exposed through the `/api/ai` Route Handler because it streams its response to the client.
 - Notes are cached and revalidated by user-specific cache tags.
+- Share-link expiry is stateless: temporary links carry a signed token with an expiration timestamp, so no additional database column is required.
+- The public share route validates the token signature, note ID, and expiration before returning note content.
 - The `/text` workspace and `/api/ai` endpoint are protected by the authentication middleware.
 
 ## Contributing

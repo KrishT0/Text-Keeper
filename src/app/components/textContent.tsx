@@ -1,6 +1,10 @@
 "use client";
 
-import { deleteNoteAction, editNoteAction } from "@/app/text/action";
+import {
+  createShareLink,
+  deleteNoteAction,
+  editNoteAction,
+} from "@/app/text/action";
 import {
   ChevronDown,
   ChevronUp,
@@ -46,8 +50,12 @@ function TextContent({
   const [hasChanges, setHasChanges] = useState<boolean>(false);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [needsExpansion, setNeedsExpansion] = useState<boolean>(false);
+  const [isShareMenuOpen, setIsShareMenuOpen] = useState(false);
+  const [customExpiry, setCustomExpiry] = useState(60);
+  const [isCreatingShareLink, setIsCreatingShareLink] = useState(false);
 
   const textRef = useRef<HTMLTextAreaElement>(null);
+  const shareMenuRef = useRef<HTMLDivElement>(null);
   const isDeployed = !!process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL;
   const baseUrl = isDeployed
     ? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -74,15 +82,63 @@ function TextContent({
     }
   }, [noteContent, isExpanded, isEditing]);
 
+  useEffect(() => {
+    if (!isShareMenuOpen) return;
+
+    const handleOutsideClick = (event: PointerEvent) => {
+      if (
+        shareMenuRef.current &&
+        !shareMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsShareMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handleOutsideClick);
+    return () =>
+      document.removeEventListener("pointerdown", handleOutsideClick);
+  }, [isShareMenuOpen]);
+
   const onClickCopy = () => {
     navigator.clipboard.writeText(text);
     toast("Text copied to clipboard");
   };
 
   const onClickLink = () => {
-    const shareableLink = `${baseUrl}/share/${id}`;
-    navigator.clipboard.writeText(shareableLink);
+    setIsShareMenuOpen((isOpen) => !isOpen);
+  };
+
+  const createAndCopyShareLink = async (
+    expiry: "hour" | "day" | "never" | number,
+  ) => {
+    setIsCreatingShareLink(true);
+
+    const result = await createShareLink(id, expiry);
+
+    if (result.error) {
+      toast.error(result.error);
+      setIsCreatingShareLink(false);
+      return;
+    }
+
+    const token = result.token
+      ? `?token=${encodeURIComponent(result.token)}`
+      : "";
+    const shareableLink = `${baseUrl}/share/${id}${token}`;
+
+    await navigator.clipboard.writeText(shareableLink);
+    setIsShareMenuOpen(false);
+    setIsCreatingShareLink(false);
     toast("Link copied to clipboard");
+  };
+
+  const createCustomShareLink = () => {
+    if (!Number.isInteger(customExpiry) || customExpiry < 1) {
+      toast.error("Enter at least 1 minute");
+      return;
+    }
+
+    void createAndCopyShareLink(customExpiry);
   };
 
   const openModal = () => {
@@ -195,23 +251,105 @@ function TextContent({
       <div className="bg-[#1F2121] rounded-md">
         <div className="flex justify-between pb-0">
           <p
-            className={`${geistMono.className} bg-[#2D2F2F] p-1 rounded-tl-md rounded-br-md font-semibold text-xs text-[#949592]`}
+            className={`${geistMono.className} bg-[#2D2F2F] p-1.5 rounded-tl-md rounded-br-md font-semibold text-xs text-[#949592]`}
           >
             text
           </p>
-          <div className="flex">
-            <Link2
-              className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
-              onClick={onClickLink}
-            />
-            <QrCode
-              className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+          <div className="flex items-start">
+            <div ref={shareMenuRef} className="relative">
+              <button
+                type="button"
+                aria-label="Share note"
+                aria-expanded={isShareMenuOpen}
+                onClick={onClickLink}
+                className="m-1 text-[#949592] cursor-pointer transition-colors hover:text-[#c0c1bd]"
+              >
+                <Link2 className="h-4" />
+              </button>
+
+              {isShareMenuOpen && (
+                <div className="absolute right-1 top-5 z-30 w-52 rounded-md border-[3px] border-[#f5f5f535] bg-[#262828] p-2 shadow-xl">
+                  <p className="px-2 pb-2 text-sm font-medium text-[#C5C8C6]">
+                    Link expires in
+                  </p>
+                  <div className="flex flex-col gap-1">
+                    <button
+                      type="button"
+                      disabled={isCreatingShareLink}
+                      onClick={() => void createAndCopyShareLink("hour")}
+                      className="rounded cursor-pointer px-2 py-1.5 text-left text-xs text-[#949592] transition-colors hover:bg-[#363939] hover:text-[#EDEDED] disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      1 hour
+                    </button>
+                    <button
+                      type="button"
+                      disabled={isCreatingShareLink}
+                      onClick={() => void createAndCopyShareLink("day")}
+                      className="rounded cursor-pointer px-2 py-1.5 text-left text-xs text-[#949592] transition-colors hover:bg-[#363939] hover:text-[#EDEDED] disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      1 day
+                    </button>
+                    <button
+                      type="button"
+                      disabled={isCreatingShareLink}
+                      onClick={() => void createAndCopyShareLink("never")}
+                      className="rounded cursor-pointer px-2 py-1.5 text-left text-xs text-[#949592] transition-colors hover:bg-[#363939] hover:text-[#EDEDED] disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      Never
+                    </button>
+                  </div>
+                  <div className="mt-2 border-t border-[#3b3d3d] pt-2">
+                    <label
+                      htmlFor={`custom-expiry-${id}`}
+                      className="mb-1 block px-2 text-xs text-[#949592]"
+                    >
+                      Custom minutes
+                    </label>
+                    <div className="flex gap-1 px-1">
+                      <input
+                        id={`custom-expiry-${id}`}
+                        type="number"
+                        min="1"
+                        max="525600"
+                        value={customExpiry}
+                        onChange={(event) =>
+                          setCustomExpiry(Number(event.target.value))
+                        }
+                        className="[appearance:textfield] w-full rounded bg-[#2D2F2F] px-2 py-1 text-xs text-[#C5C8C6] outline-none placeholder:text-[#696b69] focus:ring-1 focus:ring-[#949592] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                        placeholder="Minutes"
+                      />
+                      <button
+                        type="button"
+                        disabled={isCreatingShareLink}
+                        onClick={createCustomShareLink}
+                        className="rounded bg-[#EDEDED] px-2 py-1 text-xs font-medium text-[#191A1A] transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+                      >
+                        {isCreatingShareLink ? "..." : "Copy"}
+                      </button>
+                    </div>
+                    <p className="px-2 pt-1 text-[10px] text-[#696b69]">
+                      Up to 1 year
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+            <button
+              type="button"
+              aria-label="Generate QR code"
               onClick={openModal}
-            />
-            <Copy
-              className="h-4 m-1 hover:text-[#c0c1bd] cursor-pointer text-[#949592]"
+              className="m-1 text-[#949592] cursor-pointer transition-colors hover:text-[#c0c1bd]"
+            >
+              <QrCode className="h-4" />
+            </button>
+            <button
+              type="button"
+              aria-label="Copy note text"
               onClick={onClickCopy}
-            />
+              className="m-1 text-[#949592] cursor-pointer transition-colors hover:text-[#c0c1bd]"
+            >
+              <Copy className="h-4" />
+            </button>
           </div>
         </div>
         <textarea

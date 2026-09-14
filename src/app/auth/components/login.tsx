@@ -30,7 +30,11 @@ function LoginForm({ toggleAUthForm }: authFormType) {
       <h3 className="text-xl mt-5 font-semibold text-center">
         Sign in to your account
       </h3>
-      <form action={formAction} className="flex flex-col gap-4">
+      <form
+        action={formAction}
+        className="flex flex-col gap-4"
+        aria-busy={isPending}
+      >
         <div className="flex flex-col gap-2">
           <label htmlFor="username" className="text-sm">
             Username
@@ -89,7 +93,17 @@ function LoginForm({ toggleAUthForm }: authFormType) {
           }`}
           disabled={isPending}
         >
-          Sign in
+          {isPending ? (
+            <span className="flex items-center justify-center gap-2">
+              <span
+                className="h-3 w-3 animate-spin rounded-full border-2 border-[#191A1A] border-t-transparent"
+                aria-hidden="true"
+              />
+              Signing in...
+            </span>
+          ) : (
+            "Sign in"
+          )}
         </button>
       </form>
       <p className="text-sm text-[#818181] text-center mt-3">

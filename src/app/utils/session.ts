@@ -26,12 +26,39 @@ type SessionPayload = {
   userId: string;
 };
 
+type ShareTokenPayload = {
+  noteId: string;
+};
+
 export async function encrypt(payload: SessionPayload) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("7d")
     .sign(encodedKey);
+}
+
+export async function createShareToken(noteId: string, expiresAt: number) {
+  return new SignJWT({ noteId } satisfies ShareTokenPayload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime(Math.floor(expiresAt / 1000))
+    .sign(encodedKey);
+}
+
+export async function verifyShareToken(
+  token: string,
+  noteId: string,
+): Promise<boolean> {
+  try {
+    const { payload } = await jwtVerify(token, encodedKey, {
+      algorithms: ["HS256"],
+    });
+
+    return payload.noteId === noteId;
+  } catch {
+    return false;
+  }
 }
 
 export async function decrypt(session: string | undefined = "") {
